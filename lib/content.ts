@@ -12,6 +12,13 @@ export const company = {
     'Land No. LL006 Sy.No.221 TS Agros Ltd Chinthal, Beside Qutbullapur Municipal Ground, Hyderabad 500054',
   whatsapp: 'https://wa.me/919100997434',
   starCNC: 'Star CNC Engineering Works',
+  partnerName: 'U. Parashuram',
+  role: 'Managing Partner',
+  employees: '26–50',
+  gstYear: '2017',
+  rating: '4.9/5 on IndiaMART',
+  aboutBody:
+    'Led by Managing Partner U. Parashuram, our team of 26–50 skilled professionals ensures precision at every stage — from raw material cutting to final powder coated delivery.',
 }
 
 export const navLinks = [
@@ -26,8 +33,8 @@ export const navLinks = [
 export const heroStats = [
   { value: '15+', label: 'Years Experience' },
   { value: 'ISO 9001:2015', label: 'Certified' },
-  { value: '9+', label: 'Industry Clients' },
-  { value: '5', label: 'Product Lines' },
+  { value: '12+', label: 'Industry Clients' },
+  { value: '8', label: 'Product Lines' },
 ]
 
 export const heroMarqueeClients = [
@@ -36,6 +43,8 @@ export const heroMarqueeClients = [
   'HBL Power Systems',
   'Cygni Energy',
   'Race Energy',
+  'Siemens',
+  'Gr Power Switchgear',
 ]
 
 export const clients = [
@@ -48,41 +57,61 @@ export const clients = [
   'Brisk Energy Pvt Ltd',
   'Race Energy',
   'HBL Power Systems Ltd',
+  'Gr Power Switchgear Limited',
+  'Siemens (Sub Contractor)',
+  'Switchgear & Structural Pvt. Ltd.',
 ]
 
 export const products = [
   {
     image: '/images/electrical-enclosure.png',
     tag: 'Electrical',
-    name: 'Electronic and Electrical Enclosures',
+    name: 'Electronic & Electrical Enclosures',
     description: 'Custom IP-rated enclosures for control panels and distribution boards.',
     bullets: [
       'Custom IP ratings available',
       'Control panels and distribution boards',
       'Fabricated to exact specifications',
     ],
+    subcategories: [
+      'Electrical Metal Cabinets',
+      'Electronic Enclosures',
+      'Sheet Metal Cabinets',
+      'Telecom Enclosures',
+      'Telecom Cabinets',
+      'Inverter Cabinets',
+      'Power Supply Cabinets',
+    ],
   },
   {
     image: '/images/ev-battery.png',
     tag: 'EV Automotive',
-    name: 'EV Battery Enclosures and Child Parts',
+    name: 'EV Battery Enclosures & Child Parts',
     description: 'Lightweight, high-strength housings for electric vehicle battery systems.',
     bullets: [
       'High-strength lightweight build',
       'Mounting brackets and child parts',
       'Trusted by Amara Raja and Cygni Energy',
     ],
+    subcategories: [
+      'E Vehicle Battery Enclosure',
+      'Battery Pack Enclosure',
+      'Battery Containers',
+      'EV Battery Case',
+      'Battery Box',
+    ],
   },
   {
     image: '/images/solar-structure.png',
     tag: 'Solar',
-    name: 'Solar Structures and Street Light Poles',
+    name: 'Solar Structures & Street Light Poles',
     description: 'Mounting structures for commercial solar installations.',
     bullets: [
       'Hot-rolled mild steel',
       'Commercial and industrial scale',
       'Galvanised for weather resistance',
     ],
+    subcategories: ['Solar Mounting Structures', 'Street Light Poles'],
   },
   {
     image: '/images/sheet-metal.png',
@@ -93,6 +122,13 @@ export const products = [
       'Cabinets, racks and lockers',
       'Custom dimensions available',
       'Industrial and institutional clients',
+    ],
+    subcategories: [
+      'Metal Storage Cabinet',
+      'Tool Boxes',
+      'Garment Storage Cabinet',
+      'Aluminium Enclosure',
+      'Sheet Metal Fabrications',
     ],
   },
   {
@@ -105,25 +141,80 @@ export const products = [
       'No third-party delays',
       'Faster turnaround and tighter QC',
     ],
+    subcategories: ['Powder Coating Service'],
+  },
+  {
+    image: '/images/cnc-image.webp',
+    tag: 'Laser Cutting',
+    name: 'Laser Cutting Service',
+    description: 'High-precision fiber laser cutting for MS, AL, and SS sheets.',
+    bullets: [
+      'Fiber laser technology',
+      'MS, Aluminium and Stainless Steel',
+      'Job work and bulk orders',
+    ],
+    subcategories: ['Laser Cutting Fabrication Service', 'Laser Cutting Jobworks'],
+  },
+  {
+    image: '/images/sheet-metal-fabrication.png',
+    tag: 'CNC Bending',
+    name: 'CNC Bending Job Work',
+    description: 'Precision CNC press brake bending for complex sheet metal profiles.',
+    bullets: [
+      'Multi-axis press brake',
+      'Repeatable accuracy for bulk',
+      'Job work accepted',
+    ],
+    subcategories: ['CNC Bending Job Work'],
+  },
+  {
+    image: '/images/electrical-enclosure.png',
+    tag: 'Aluminium',
+    name: 'Aluminium Fabrication',
+    description: 'Aluminium enclosures and TIG welded assemblies for precision applications.',
+    bullets: [
+      'Aluminium TIG welding in-house',
+      'Custom enclosures and profiles',
+      'Lightweight structural components',
+    ],
+    subcategories: ['Aluminium Enclosures', 'Aluminium TIG Welding'],
   },
 ]
 
 export const infrastructure = [
   {
-    icon: 'precision_manufacturing',
-    name: 'HSG Fiber Laser',
-    tag: 'Laser Cutting',
-    specs: ['High-speed fiber laser', 'Bed size 3000×1500mm', 'Cuts MS, AL and SS'],
+    icon: 'content_cut',
+    name: 'Sheet Cutting Machine',
+    tag: 'Cutting',
+    specs: ['Raw sheet blanking', 'MS, AL and SS compatible', 'High-volume throughput'],
+  },
+  {
+    icon: 'settings_input_component',
+    name: 'Punching Power Press Machine',
+    tag: 'Punching',
+    specs: ['Precision hole punching', 'Multiple die sets', 'Consistent repeatability'],
   },
   {
     icon: 'architecture',
-    name: 'CNC Press Brake',
+    name: 'CNC Bending Machine',
     tag: 'CNC Bending',
     specs: ['High-tonnage press brake', 'Multi-axis precision bending', 'Repeatable accuracy for bulk'],
   },
   {
+    icon: 'hardware',
+    name: 'Drilling Machine',
+    tag: 'Drilling',
+    specs: ['Precision hole drilling', 'Multiple spindle speeds', 'Clean finish on all metals'],
+  },
+  {
+    icon: 'bolt',
+    name: 'Aluminium TIG Welding Machine',
+    tag: 'Welding',
+    specs: ['TIG welding in-house', 'Aluminium and stainless capable', 'Clean, strong weld joints'],
+  },
+  {
     icon: 'format_paint',
-    name: 'Powder Coating Unit',
+    name: 'In-House Powder Coating Unit',
     tag: 'Finishing',
     specs: ['Complete RAL colour range', 'In-house processing', 'No third-party delays'],
   },
@@ -199,11 +290,14 @@ export const howItWorks = [
 ]
 
 export const productOptions = [
-  'Electronic and Electrical Enclosures',
-  'EV Battery Enclosures',
-  'Solar Structures',
-  'Sheet Metal Products',
-  'Powder Coating',
+  'Electronic & Electrical Enclosures',
+  'EV Battery Enclosures & Child Parts',
+  'Solar Structures & Street Light Poles',
+  'General Sheet Metal Products',
+  'In-House Powder Coating',
+  'Laser Cutting Service',
+  'CNC Bending Job Work',
+  'Aluminium Fabrication',
   'Other',
 ]
 
