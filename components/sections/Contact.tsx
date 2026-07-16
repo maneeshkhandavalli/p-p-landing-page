@@ -3,6 +3,7 @@ import { useState, FormEvent } from 'react'
 import React from 'react'
 import { company, productOptions } from '@/lib/content'
 import { SectionLabel } from '@/components/ui/SectionLabel'
+import { AnimatedUnderline } from '@/components/ui/AnimatedUnderline'
 import { Button } from '@/components/ui/Button'
 import { useScrollAnimation } from '@/lib/useScrollAnimation'
 
@@ -30,6 +31,7 @@ export default function Contact() {
           <h2 className="font-heading font-bold text-navy text-4xl md:text-5xl leading-tight">
             Request a Quote or Visit Our Facility
           </h2>
+          <AnimatedUnderline visible={isVisible} />
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8 items-start">

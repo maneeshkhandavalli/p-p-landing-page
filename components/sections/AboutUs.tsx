@@ -2,6 +2,7 @@
 import React from 'react'
 import { company } from '@/lib/content'
 import { SectionLabel } from '@/components/ui/SectionLabel'
+import { AnimatedUnderline } from '@/components/ui/AnimatedUnderline'
 import { Button } from '@/components/ui/Button'
 import { useScrollAnimation } from '@/lib/useScrollAnimation'
 
@@ -34,23 +35,24 @@ export default function AboutUs() {
         {/* Left — heading, body, stat cards */}
         <div>
           <div style={anim(0)}><SectionLabel>About P&amp;P Engineering Works</SectionLabel></div>
-          <h2 style={anim(100)} className="font-heading font-bold text-navy text-4xl md:text-5xl leading-tight mb-6">
+          <h2 style={anim(100)} className="font-heading font-bold text-navy text-4xl md:text-5xl leading-tight mb-3">
             Innovative Engineering for a Sustainable Future
           </h2>
+          <AnimatedUnderline visible={isVisible} center={false} />
           <p style={anim(200)} className="text-body font-sans text-lg leading-relaxed mb-8">
             Established in 2009 and ISO 9001:2015 certified, {company.name} is a trusted manufacturer of
             electrical enclosures, EV battery casings, solar structures and precision-engineered industrial
             products.
           </p>
-          <div className="flex flex-wrap gap-4">
+          <div className="grid grid-cols-3 gap-2">
             {stats.map((s, i) => (
               <div
                 key={s.label}
                 style={anim(300 + i * 100)}
-                className="bg-white border border-gray-200 rounded-xl px-5 py-4 text-center shadow-sm min-w-[120px]"
+                className="bg-white border border-gray-200 rounded-xl p-2.5 sm:px-5 sm:py-4 text-center shadow-sm"
               >
-                <div className="font-heading font-bold text-navy text-base">{s.value}</div>
-                <div className="text-body font-sans text-xs mt-1">{s.label}</div>
+                <div className="font-heading font-bold text-navy text-[11px] sm:text-base leading-tight">{s.value}</div>
+                <div className="text-body font-sans text-[9px] sm:text-xs mt-0.5 sm:mt-1">{s.label}</div>
               </div>
             ))}
           </div>

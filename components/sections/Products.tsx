@@ -1,8 +1,10 @@
 'use client'
 import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
 import { products } from '@/lib/content'
 import { SectionLabel } from '@/components/ui/SectionLabel'
+import { AnimatedUnderline } from '@/components/ui/AnimatedUnderline'
 import { Button } from '@/components/ui/Button'
 import { useScrollAnimation } from '@/lib/useScrollAnimation'
 
@@ -10,9 +12,9 @@ function ProductCard({ p, style }: { p: (typeof products)[number]; style: React.
   return (
     <div
       style={style}
-      className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200 flex flex-col"
+      className="homepage-product-card bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm flex flex-col"
     >
-      <div className="relative h-[220px] w-full">
+      <div className="product-image overflow-hidden relative h-[220px] w-full">
         <Image src={p.image} alt={p.name} fill className="object-cover" />
       </div>
       <div className="p-5 flex flex-col flex-1">
@@ -29,7 +31,7 @@ function ProductCard({ p, style }: { p: (typeof products)[number]; style: React.
             </li>
           ))}
         </ul>
-        <div className="mt-auto">
+        <div className="product-learn-more mt-auto">
           <Button href="#contact" variant="orange-outline" className="w-full justify-center text-sm py-2">
             Learn More
           </Button>
@@ -48,9 +50,7 @@ export default function Products() {
     transition: `opacity 0.6s ease ${delay}ms, transform 0.6s ease ${delay}ms`,
   })
 
-  const row1 = products.slice(0, 3)
-  const row2 = products.slice(3, 6)
-  const row3 = products.slice(6)
+  const displayProducts = products.slice(0, 5)
 
   return (
     <section id="products" ref={ref as React.RefObject<HTMLElement>} className="bg-white py-20 px-6">
@@ -60,27 +60,34 @@ export default function Products() {
           <h2 style={anim(100)} className="font-heading font-bold text-navy text-4xl md:text-5xl leading-tight">
             Our Product Range
           </h2>
+          <AnimatedUnderline visible={isVisible} />
         </div>
 
-        {/* Row 1 */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-          {row1.map((p, i) => (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {displayProducts.map((p, i) => (
             <ProductCard key={p.name} p={p} style={anim(200 + i * 100)} />
           ))}
-        </div>
 
-        {/* Row 2 */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-          {row2.map((p, i) => (
-            <ProductCard key={p.name} p={p} style={anim(500 + i * 100)} />
-          ))}
-        </div>
-
-        {/* Row 3 — last 2 centered */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-          {row3.map((p, i) => (
-            <ProductCard key={p.name} p={p} style={anim(800 + i * 100)} />
-          ))}
+          {/* 6th card — explore CTA */}
+          <div
+            style={anim(700)}
+            className="bg-navy rounded-xl shadow-sm flex flex-col p-8 justify-between"
+          >
+            <div>
+              <h3 className="font-heading font-bold text-white text-2xl leading-snug mb-3">
+                Explore More
+              </h3>
+              <p className="text-slate-200 text-sm leading-relaxed">
+                Browse our complete range of 30+ products
+              </p>
+            </div>
+            <Link
+              href="/products"
+              className="mt-8 inline-flex items-center justify-center bg-cta text-white px-6 py-3 rounded-lg font-sans font-medium text-sm hover:bg-orange-600 transition-colors"
+            >
+              View All Products →
+            </Link>
+          </div>
         </div>
       </div>
     </section>

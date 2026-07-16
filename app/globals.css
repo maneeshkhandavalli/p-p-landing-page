@@ -82,6 +82,96 @@ body {
   color: var(--foreground);
 }
 
+/* ── Orange-filled button sweep ─────────────────────────────────── */
+.btn-orange-sweep {
+  background-image: linear-gradient(to right, #D4691A 50%, #F07B20 50%);
+  background-size: 200% 100%;
+  background-position: 100% 0;
+  transition: background-position 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease !important;
+}
+.btn-orange-sweep:hover {
+  background-position: 0% 0;
+  transform: scale(1.02);
+  box-shadow: 0 8px 24px rgba(240, 123, 32, 0.4);
+}
+
+/* ── Navbar animated underline ──────────────────────────────────── */
+.nav-link-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #2979FF;
+  transition: width 0.2s ease;
+}
+.nav-link-underline:hover::after {
+  width: 100%;
+}
+
+/* ── Homepage product card hover ────────────────────────────────── */
+.homepage-product-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.homepage-product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(26, 35, 126, 0.12);
+}
+.product-image img {
+  transition: transform 0.3s ease;
+}
+.homepage-product-card:hover .product-image img {
+  transform: scale(1.05);
+}
+.product-learn-more {
+  transition: transform 0.3s ease;
+}
+.homepage-product-card:hover .product-learn-more {
+  transform: translateY(-4px);
+}
+
+/* ── Catalogue card hover ───────────────────────────────────────── */
+a, button { cursor: pointer; }
+
+.catalogue-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+.catalogue-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(26, 35, 126, 0.12);
+}
+.card-img {
+  transition: transform 0.3s ease;
+}
+.catalogue-card:hover .card-img {
+  transform: scale(1.05);
+}
+.card-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(41, 121, 255, 0.80);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.catalogue-card:hover .card-overlay {
+  opacity: 1;
+}
+.card-overlay-pill {
+  color: #fff;
+  font-family: var(--font-inter), sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  border: 1.5px solid #fff;
+  border-radius: 999px;
+  padding: 5px 16px;
+}
+
 body.js-loading > :not([data-loader]) {
   opacity: 0;
 }

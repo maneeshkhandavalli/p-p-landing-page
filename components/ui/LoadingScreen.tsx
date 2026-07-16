@@ -6,6 +6,11 @@ export default function LoadingScreen() {
   const [fading, setFading] = useState(false)
 
   useEffect(() => {
+    if (sessionStorage.getItem('hasLoaded') === 'true') {
+      setVisible(false)
+      return
+    }
+
     document.body.classList.add('js-loading')
 
     const fadeTimer = setTimeout(() => {
@@ -14,7 +19,10 @@ export default function LoadingScreen() {
       document.body.classList.add('js-loaded')
     }, 1800)
 
-    const unmountTimer = setTimeout(() => setVisible(false), 2200)
+    const unmountTimer = setTimeout(() => {
+      setVisible(false)
+      sessionStorage.setItem('hasLoaded', 'true')
+    }, 2200)
 
     return () => {
       clearTimeout(fadeTimer)

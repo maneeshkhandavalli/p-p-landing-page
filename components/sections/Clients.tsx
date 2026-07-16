@@ -2,6 +2,7 @@
 import React from 'react'
 import { clients } from '@/lib/content'
 import { SectionLabel } from '@/components/ui/SectionLabel'
+import { AnimatedUnderline } from '@/components/ui/AnimatedUnderline'
 import { useScrollAnimation } from '@/lib/useScrollAnimation'
 
 function ClientPill({ name }: { name: string }) {
@@ -30,6 +31,7 @@ export default function Clients() {
         <h2 style={anim(100)} className="font-heading font-bold text-navy text-4xl md:text-5xl leading-tight mb-4">
           Trusted by India&apos;s Industry Leaders
         </h2>
+        <AnimatedUnderline visible={isVisible} />
         <p style={anim(200)} className="text-body font-sans text-base max-w-xl mx-auto">
           Serving Tier-1 companies across EV, energy, solar and industrial sectors since 2009.
         </p>

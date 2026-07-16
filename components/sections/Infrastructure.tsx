@@ -2,6 +2,7 @@
 import React from 'react'
 import { company } from '@/lib/content'
 import { SectionLabel } from '@/components/ui/SectionLabel'
+import { AnimatedUnderline } from '@/components/ui/AnimatedUnderline'
 import { Button } from '@/components/ui/Button'
 import { useScrollAnimation } from '@/lib/useScrollAnimation'
 
@@ -50,6 +51,7 @@ export default function Infrastructure() {
           <h2 style={anim(100)} className="font-heading font-bold text-navy text-4xl md:text-5xl leading-tight mb-4">
             Advanced Equipment &amp; Facility
           </h2>
+          <AnimatedUnderline visible={isVisible} />
           <p style={anim(200)} className="text-body font-sans text-base max-w-xl mx-auto">
             State-of-the-art machinery for precision sheet metal fabrication across all material types.
           </p>

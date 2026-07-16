@@ -2,6 +2,7 @@
 import React from 'react'
 import { whyUs } from '@/lib/content'
 import { SectionLabel } from '@/components/ui/SectionLabel'
+import { AnimatedUnderline } from '@/components/ui/AnimatedUnderline'
 import { useScrollAnimation } from '@/lib/useScrollAnimation'
 
 export default function WhyUs() {
@@ -21,6 +22,7 @@ export default function WhyUs() {
           <h2 style={anim(100)} className="font-heading font-bold text-navy text-4xl md:text-5xl leading-tight">
             Built for India&apos;s Most Demanding Industries
           </h2>
+          <AnimatedUnderline visible={isVisible} />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

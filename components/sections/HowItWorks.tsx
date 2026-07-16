@@ -2,6 +2,7 @@
 import React from 'react'
 import { howItWorks } from '@/lib/content'
 import { SectionLabel } from '@/components/ui/SectionLabel'
+import { AnimatedUnderline } from '@/components/ui/AnimatedUnderline'
 import { useScrollAnimation } from '@/lib/useScrollAnimation'
 
 export default function HowItWorks() {
@@ -21,6 +22,7 @@ export default function HowItWorks() {
           <h2 style={anim(100)} className="font-heading font-bold text-navy text-4xl md:text-5xl leading-tight">
             Simple. Transparent. Reliable.
           </h2>
+          <AnimatedUnderline visible={isVisible} />
         </div>
 
         <div className="relative flex flex-col md:flex-row gap-6 md:gap-0 items-stretch">

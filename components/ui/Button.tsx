@@ -13,13 +13,13 @@ interface ButtonProps {
 
 const styles: Record<Variant, string> = {
   'orange-filled':
-    'bg-cta text-white hover:bg-orange-600 hover:scale-105 hover:shadow-[0_0_24px_rgba(240,123,32,0.45)]',
+    'btn-orange-sweep text-white',
   'orange-outline':
-    'border-2 border-cta text-cta hover:border-accent hover:text-accent',
+    'border-2 border-cta text-cta hover:bg-orange-50 hover:scale-[1.02] transition-all duration-200',
   'white-outline':
-    'border-2 border-white text-white hover:border-accent hover:text-accent',
+    'border-2 border-white text-white hover:bg-white/10 hover:scale-[1.02] transition-all duration-200',
   'navy-outline':
-    'border-2 border-navy text-navy hover:border-accent hover:text-accent',
+    'border-2 border-navy text-navy hover:bg-navy hover:text-white hover:scale-[1.02] transition-all duration-200',
   'green-filled':
     'bg-[#25D366] text-white hover:bg-green-600 hover:scale-105',
 }

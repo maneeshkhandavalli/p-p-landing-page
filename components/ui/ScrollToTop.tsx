@@ -12,7 +12,14 @@ export default function ScrollToTop() {
 
   return (
     <button
-      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      onClick={() => {
+        const lenis = (window as any).__lenis
+        if (lenis) {
+          lenis.scrollTo(0, { duration: 1.2, easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) })
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' })
+        }
+      }}
       aria-label="Scroll to top"
       style={{
         position: 'fixed',
