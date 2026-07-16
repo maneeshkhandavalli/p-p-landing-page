@@ -1,15 +1,21 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useLayoutEffect } from 'react'
+
+// useLayoutEffect runs before browser paint — prevents the 1-frame white flash on skip
+const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect
 
 export default function LoadingScreen() {
   const [visible, setVisible] = useState(true)
   const [fading, setFading] = useState(false)
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (sessionStorage.getItem('hasLoaded') === 'true') {
       setVisible(false)
-      return
     }
+  }, [])
+
+  useEffect(() => {
+    if (sessionStorage.getItem('hasLoaded') === 'true') return
 
     document.body.classList.add('js-loading')
 
