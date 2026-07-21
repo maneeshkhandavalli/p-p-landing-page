@@ -9,11 +9,11 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-navy: #1A237E;
-  --color-accent: #2979FF;
+  --color-accent: #1565C0;
   --color-cta: #F07B20;
   --color-offwhite: #F4F7FC;
   --color-body: #4A5568;
-  --color-icon-bg: #E3F2FD;
+  --color-icon-bg: #E3EDF7;
   --font-sans: var(--font-inter);
   --font-heading: var(--font-playfair);
 }
@@ -84,7 +84,7 @@ body {
   left: 0;
   width: 0;
   height: 2px;
-  background: #2979FF;
+  background: #1565C0;
   transition: width 0.2s ease;
 }
 .nav-link-underline:hover::after {
@@ -132,7 +132,7 @@ a, button { cursor: pointer; }
 .card-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(41, 121, 255, 0.80);
+  background: rgba(21, 101, 192, 0.80);
   display: flex;
   align-items: center;
   justify-content: center;

@@ -38,7 +38,7 @@ export default function HowItWorks() {
                 <span className="absolute top-4 right-5 font-heading font-bold text-5xl text-navy/10 select-none leading-none">
                   {step.step}
                 </span>
-                <div className="w-12 h-12 rounded-full flex items-center justify-center mb-4" style={{ backgroundColor: '#E3F2FD' }}>
+                <div className="w-12 h-12 rounded-full flex items-center justify-center mb-4" style={{ backgroundColor: '#E3EDF7' }}>
                   <span className="material-symbols-outlined text-accent text-2xl">{step.icon}</span>
                 </div>
                 <h3 className="font-heading font-bold text-navy text-lg mb-2">{step.title}</h3>

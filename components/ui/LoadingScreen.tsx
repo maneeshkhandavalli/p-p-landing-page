@@ -106,8 +106,8 @@ export default function LoadingScreen() {
               top: 0,
               bottom: 0,
               width: 3,
-              background: 'linear-gradient(to bottom, transparent, #2979FF, #2979FF, transparent)',
-              boxShadow: '0 0 8px 3px rgba(41,121,255,0.7)',
+              background: 'linear-gradient(to bottom, transparent, #1565C0, #1565C0, transparent)',
+              boxShadow: '0 0 8px 3px rgba(21,101,192,0.7)',
               animation: 'laser-scan 1.5s ease-in-out forwards',
             }}
           />
@@ -131,12 +131,12 @@ export default function LoadingScreen() {
         </p>
 
         {/* Blue progress line */}
-        <div style={{ width: 200, height: 2, backgroundColor: '#E3F2FD', borderRadius: 2, overflow: 'hidden' }}>
+        <div style={{ width: 200, height: 2, backgroundColor: '#E3EDF7', borderRadius: 2, overflow: 'hidden' }}>
           <div
             style={{
               height: '100%',
               width: 0,
-              backgroundColor: '#2979FF',
+              backgroundColor: '#1565C0',
               borderRadius: 2,
               animation: 'bar-draw 0.5s ease forwards 1.2s',
             }}

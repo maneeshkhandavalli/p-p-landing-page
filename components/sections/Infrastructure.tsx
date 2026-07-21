@@ -69,7 +69,7 @@ export default function Infrastructure() {
                 {/* Icon circle */}
                 <div
                   className="w-16 h-16 rounded-full flex items-center justify-center mb-5 shrink-0"
-                  style={{ backgroundColor: '#E3F2FD' }}
+                  style={{ backgroundColor: '#E3EDF7' }}
                 >
                   <span className="material-symbols-outlined text-accent" style={{ fontSize: 32 }}>
                     {card.icon}
@@ -84,7 +84,7 @@ export default function Infrastructure() {
                 {/* Tag pill */}
                 <span
                   className="inline-block text-accent font-sans font-semibold text-[11px] uppercase tracking-wider px-3 py-1 rounded-full mb-4 self-start"
-                  style={{ backgroundColor: '#E3F2FD' }}
+                  style={{ backgroundColor: '#E3EDF7' }}
                 >
                   {card.tag}
                 </span>
@@ -105,7 +105,7 @@ export default function Infrastructure() {
 
         {/* Address banner */}
         <div
-          style={{ ...anim(600), backgroundColor: '#E3F2FD' }}
+          style={{ ...anim(600), backgroundColor: '#E3EDF7' }}
           className="w-full rounded-xl px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-4"
         >
           <div className="flex items-start gap-3">

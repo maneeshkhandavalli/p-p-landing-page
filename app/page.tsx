@@ -1,7 +1,6 @@
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import Hero from '@/components/sections/Hero'
-import AboutUs from '@/components/sections/AboutUs'
 import Products from '@/components/sections/Products'
 import Infrastructure from '@/components/sections/Infrastructure'
 import WhyUs from '@/components/sections/WhyUs'
@@ -19,7 +18,6 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
-        <AboutUs />
         <Products />
         <Infrastructure />
         <WhyUs />

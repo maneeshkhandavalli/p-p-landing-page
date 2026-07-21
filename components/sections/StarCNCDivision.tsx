@@ -19,7 +19,7 @@ export default function StarCNCDivision() {
     <section id="star-cnc" ref={ref as React.RefObject<HTMLElement>} className="bg-white py-20 px-6">
       <div className="max-w-7xl mx-auto">
         <div
-          style={{ ...anim(0), borderLeft: '4px solid #2979FF' }}
+          style={{ ...anim(0), borderLeft: '4px solid #1565C0' }}
           className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm"
         >
           <div className="grid lg:grid-cols-[2fr_3fr]">

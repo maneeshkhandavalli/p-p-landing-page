@@ -31,11 +31,11 @@ export default function WhyUs() {
               key={item.title}
               style={{
                 ...anim(200 + i * 100),
-                borderTop: '3px solid #2979FF',
+                borderTop: '3px solid #1565C0',
               }}
               className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow"
             >
-              <div className="w-12 h-12 rounded-full flex items-center justify-center mb-4" style={{ backgroundColor: '#E3F2FD' }}>
+              <div className="w-12 h-12 rounded-full flex items-center justify-center mb-4" style={{ backgroundColor: '#E3EDF7' }}>
                 <span className="material-symbols-outlined text-accent text-2xl">{item.icon}</span>
               </div>
               <h3 className="font-heading font-bold text-navy text-xl mb-3">{item.title}</h3>
