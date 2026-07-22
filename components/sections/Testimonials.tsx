@@ -19,7 +19,7 @@ export default function Testimonials() {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <div style={anim(0)}><SectionLabel>What Our Clients Say</SectionLabel></div>
-          <h2 style={anim(100)} className="font-heading font-bold text-navy text-4xl md:text-5xl leading-tight">
+          <h2 style={{ ...anim(100), letterSpacing: '-0.02em' }} className="font-heading font-bold text-navy text-4xl md:text-[52px] leading-tight">
             Trusted. Reliable. Precise.
           </h2>
           <AnimatedUnderline visible={isVisible} />

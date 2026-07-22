@@ -5,11 +5,15 @@ import { SectionLabel } from '@/components/ui/SectionLabel'
 import { AnimatedUnderline } from '@/components/ui/AnimatedUnderline'
 import { useScrollAnimation } from '@/lib/useScrollAnimation'
 
-function ClientPill({ name }: { name: string }) {
+function ClientLogo({ logo, alt }: { logo: string; alt: string }) {
   return (
-    <div className="inline-flex items-center gap-2 bg-white border border-[#E1E2E4] rounded-full px-4 py-2 shrink-0 mx-3">
-      <span className="w-2 h-2 rounded-full bg-accent shrink-0" />
-      <span className="text-navy font-sans font-medium text-sm whitespace-nowrap">{name}</span>
+    <div className="flex items-center justify-center shrink-0 mx-10">
+      <img
+        src={logo}
+        alt={alt}
+        className="max-h-8 w-auto object-contain"
+        style={{ filter: 'brightness(0) invert(1)' }}
+      />
     </div>
   )
 }
@@ -28,7 +32,7 @@ export default function Clients() {
     <section id="clients" ref={ref as React.RefObject<HTMLElement>} className="bg-white py-20 px-0">
       <div className="text-center px-6 mb-12">
         <div style={anim(0)}><SectionLabel>Our Clients</SectionLabel></div>
-        <h2 style={anim(100)} className="font-heading font-bold text-navy text-4xl md:text-5xl leading-tight mb-4">
+        <h2 style={{ ...anim(100), letterSpacing: '-0.02em' }} className="font-heading font-bold text-navy text-4xl md:text-[52px] leading-tight mb-4">
           Trusted by India&apos;s Industry Leaders
         </h2>
         <AnimatedUnderline visible={isVisible} />
@@ -37,22 +41,27 @@ export default function Clients() {
         </p>
       </div>
 
-      {/* Marquee rows — pause on hover via .marquee-group CSS class */}
-      <div className="marquee-group space-y-4 overflow-hidden">
-        <div className="relative">
-          <div className="flex marquee-left">
-            {doubled.map((client, i) => <ClientPill key={i} name={client} />)}
+      <div className="bg-navy py-10 overflow-hidden">
+        <div className="marquee-group space-y-6">
+          <div className="relative overflow-hidden">
+            <div className="flex marquee-left items-center">
+              {doubled.map((client, i) => (
+                <ClientLogo key={i} logo={client.logo} alt={client.alt} />
+              ))}
+            </div>
+            <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-navy to-transparent z-10" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-navy to-transparent z-10" />
           </div>
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-white to-transparent z-10" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-white to-transparent z-10" />
-        </div>
 
-        <div className="relative">
-          <div className="flex marquee-right">
-            {doubled.map((client, i) => <ClientPill key={i} name={client} />)}
+          <div className="relative overflow-hidden">
+            <div className="flex marquee-right items-center">
+              {doubled.map((client, i) => (
+                <ClientLogo key={i} logo={client.logo} alt={client.alt} />
+              ))}
+            </div>
+            <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-navy to-transparent z-10" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-navy to-transparent z-10" />
           </div>
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-white to-transparent z-10" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-white to-transparent z-10" />
         </div>
       </div>
     </section>

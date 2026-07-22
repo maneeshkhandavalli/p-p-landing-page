@@ -1,94 +1,244 @@
 'use client'
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
-import { products } from '@/lib/content'
+import React, { useRef, useState } from 'react'
 import { SectionLabel } from '@/components/ui/SectionLabel'
 import { AnimatedUnderline } from '@/components/ui/AnimatedUnderline'
-import { Button } from '@/components/ui/Button'
 import { useScrollAnimation } from '@/lib/useScrollAnimation'
 
-function ProductCard({ p, style }: { p: (typeof products)[number]; style: React.CSSProperties }) {
-  return (
-    <div
-      style={style}
-      className="homepage-product-card bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm flex flex-col"
-    >
-      <div className="product-image overflow-hidden relative h-[220px] w-full">
-        <Image src={p.image} alt={p.name} fill className="object-cover" />
-      </div>
-      <div className="p-5 flex flex-col flex-1">
-        <span className="inline-block text-accent text-[11px] font-sans font-semibold uppercase tracking-wider bg-icon-bg px-3 py-1 rounded-full mb-3 self-start">
-          {p.tag}
-        </span>
-        <h3 className="font-heading font-bold text-navy text-[20px] leading-snug mb-2">{p.name}</h3>
-        <p className="text-body font-sans text-sm leading-relaxed mb-4">{p.description}</p>
-        <ul className="space-y-1.5 mb-5">
-          {p.bullets.map((b) => (
-            <li key={b} className="flex items-start gap-2 text-body font-sans text-sm">
-              <span className="w-2 h-2 rounded-full bg-accent mt-1.5 shrink-0" />
-              {b}
-            </li>
-          ))}
-        </ul>
-        <div className="product-learn-more mt-auto">
-          <Button href="#contact" variant="orange-outline" className="w-full justify-center text-sm py-2">
-            Learn More
-          </Button>
-        </div>
-      </div>
-    </div>
-  )
-}
+const CARD_W   = 420
+const CARD_GAP = 24
+const EDGE_PAD = 48
+
+const showcaseCards = [
+  {
+    image:       '/images/electrical-enclosure.png',
+    badge:       { label: 'MOST POPULAR', color: '#F07B20' },
+    category:    'ELECTRICAL',
+    name:        'Electronic & Electrical Enclosures',
+    description: 'Custom IP-rated enclosures for industrial control panels and distribution boards',
+    bullets:     ['Custom IP ratings available', 'Control panels and distribution boards', 'Fabricated to exact specifications'],
+  },
+  {
+    image:       '/images/ev-battery.png',
+    badge:       { label: 'EV SECTOR', color: '#16A34A' },
+    category:    'EV AUTOMOTIVE',
+    name:        'EV Battery Enclosures & Child Parts',
+    description: 'Lightweight high-strength housings for electric vehicle battery systems',
+    bullets:     ['High-strength lightweight build', 'Mounting brackets and child parts', 'Trusted by Amara Raja and Cygni Energy'],
+  },
+  {
+    image:       '/images/solar-structure.png',
+    badge:       { label: 'HIGH DEMAND', color: '#1565C0' },
+    category:    'SOLAR',
+    name:        'Solar Structures & Street Light Poles',
+    description: 'Mounting structures for commercial and industrial solar installations',
+    bullets:     ['Hot-rolled mild steel construction', 'Commercial and industrial scale', 'Galvanised for weather resistance'],
+  },
+  {
+    image:       '/images/sheet-metal.png',
+    badge:       { label: 'CUSTOM MADE', color: '#4A5568' },
+    category:    'SHEET METAL',
+    name:        'General Sheet Metal Products',
+    description: 'Cabinets, racks, lockers, trolleys and custom fabricated metal products',
+    bullets:     ['Cabinets, racks and lockers', 'Custom dimensions available', 'Industrial and institutional clients'],
+  },
+  {
+    image:       '/images/powder-coating.png',
+    badge:       { label: 'IN-HOUSE', color: '#1A237E' },
+    category:    'FINISHING',
+    name:        'In-House Powder Coating',
+    description: 'Full powder coating facility with complete RAL colour range in-house',
+    bullets:     ['Complete RAL colour range', 'No third-party delays', 'Faster turnaround and tighter QC'],
+  },
+]
+
+const TOTAL_CARDS = showcaseCards.length + 1 // +1 for Explore More
 
 export default function Products() {
   const { ref, isVisible } = useScrollAnimation()
+  const trackRef           = useRef<HTMLDivElement>(null)
+  const [activeIdx, setActiveIdx] = useState(0)
 
   const anim = (delay = 0): React.CSSProperties => ({
-    opacity: isVisible ? 1 : 0,
-    transform: isVisible ? 'translateY(0)' : 'translateY(24px)',
+    opacity:    isVisible ? 1 : 0,
+    transform:  isVisible ? 'translateY(0)' : 'translateY(24px)',
     transition: `opacity 0.6s ease ${delay}ms, transform 0.6s ease ${delay}ms`,
   })
 
-  const displayProducts = products.slice(0, 5)
+  const scrollTrack = (dir: 'left' | 'right') => {
+    trackRef.current?.scrollBy({ left: dir === 'right' ? CARD_W + CARD_GAP : -(CARD_W + CARD_GAP), behavior: 'smooth' })
+    setActiveIdx(prev => {
+      const next = dir === 'right' ? prev + 1 : prev - 1
+      return Math.max(0, Math.min(next, TOTAL_CARDS - 1))
+    })
+  }
+
+  const scrollToCard = (idx: number) => {
+    trackRef.current?.scrollTo({ left: idx * (CARD_W + CARD_GAP), behavior: 'smooth' })
+    setActiveIdx(idx)
+  }
 
   return (
-    <section id="products" ref={ref as React.RefObject<HTMLElement>} className="bg-white py-20 px-6">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-12">
-          <div style={anim(0)}><SectionLabel>What We Manufacture</SectionLabel></div>
-          <h2 style={anim(100)} className="font-heading font-bold text-navy text-4xl md:text-5xl leading-tight">
-            Our Product Range
-          </h2>
-          <AnimatedUnderline visible={isVisible} />
+    <section
+      id="products"
+      ref={ref as React.RefObject<HTMLElement>}
+      className="bg-white py-20"
+    >
+      {/* ── Section heading ──────────────────────────────────────────────── */}
+      <div className="max-w-7xl mx-auto px-6 text-center mb-8">
+        <div style={anim(0)}>
+          <SectionLabel>What We Manufacture</SectionLabel>
         </div>
+        <h2
+          style={{ ...anim(100), letterSpacing: '-0.02em' }}
+          className="font-heading font-bold text-navy text-4xl md:text-[52px] leading-tight"
+        >
+          Our Product Range
+        </h2>
+        <AnimatedUnderline visible={isVisible} />
+        <p style={anim(200)} className="text-body font-sans text-lg max-w-2xl mx-auto mt-4">
+          Five specialised product lines serving India&apos;s most demanding industrial sectors
+        </p>
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {displayProducts.map((p, i) => (
-            <ProductCard key={p.name} p={p} style={anim(200 + i * 100)} />
-          ))}
+      {/* ── Arrow controls ───────────────────────────────────────────────── */}
+      <div
+        style={anim(250)}
+        className="max-w-7xl mx-auto px-6 flex justify-end gap-3 mb-5"
+      >
+        <button
+          onClick={() => scrollTrack('left')}
+          aria-label="Scroll left"
+          className="w-12 h-12 rounded-full bg-navy flex items-center justify-center transition-opacity hover:opacity-80"
+        >
+          <span className="material-symbols-outlined text-white" style={{ fontSize: '22px' }}>
+            arrow_back
+          </span>
+        </button>
+        <button
+          onClick={() => scrollTrack('right')}
+          aria-label="Scroll right"
+          className="w-12 h-12 rounded-full bg-navy flex items-center justify-center transition-opacity hover:opacity-80"
+        >
+          <span className="material-symbols-outlined text-white" style={{ fontSize: '22px' }}>
+            arrow_forward
+          </span>
+        </button>
+      </div>
 
-          {/* 6th card — explore CTA */}
-          <div
-            style={anim(700)}
-            className="bg-navy rounded-xl shadow-sm flex flex-col p-8 justify-between"
+      {/* ── Horizontal scroll track ──────────────────────────────────────── */}
+      <div
+        ref={trackRef}
+        className="showcase-track flex overflow-x-hidden"
+        style={{ gap: CARD_GAP, paddingLeft: EDGE_PAD }}
+      >
+        {/* Product cards */}
+        {showcaseCards.map(card => (
+          <article
+            key={card.name}
+            className="showcase-card bg-white rounded-2xl shadow-md flex flex-col flex-shrink-0 overflow-hidden"
+            style={{ width: CARD_W, height: 560 }}
           >
-            <div>
-              <h3 className="font-heading font-bold text-white text-2xl leading-snug mb-3">
-                Explore More
-              </h3>
-              <p className="text-slate-200 text-sm leading-relaxed">
-                Browse our complete range of 30+ products
-              </p>
+            {/* Image — top 360px */}
+            <div className="relative flex-shrink-0 overflow-hidden" style={{ height: 360 }}>
+              <Image
+                src={card.image}
+                alt={card.name}
+                fill
+                className="showcase-card-img object-cover"
+              />
+              <div
+                className="absolute bottom-0 left-0 right-0 pointer-events-none"
+                style={{ height: 80, background: 'linear-gradient(to top, rgba(0,0,0,0.55), transparent)' }}
+              />
+              <span
+                style={{
+                  position:        'absolute',
+                  top:             12,
+                  left:            12,
+                  backgroundColor: card.badge.color,
+                  color:           '#ffffff',
+                  fontSize:        10,
+                  fontFamily:      'var(--font-inter), sans-serif',
+                  fontWeight:      700,
+                  textTransform:   'uppercase',
+                  letterSpacing:   '1px',
+                  padding:         '4px 10px',
+                  borderRadius:    100,
+                }}
+              >
+                {card.badge.label}
+              </span>
             </div>
-            <Link
-              href="/products"
-              className="mt-8 inline-flex items-center justify-center bg-cta text-white px-6 py-3 rounded-lg font-sans font-medium text-sm hover:bg-orange-600 transition-colors"
-            >
-              View All Products →
-            </Link>
-          </div>
-        </div>
+
+            {/* Content */}
+            <div className="flex flex-col flex-1 px-5 pt-4 pb-5">
+              <span className="inline-block text-accent text-[10px] font-sans font-semibold uppercase tracking-wider bg-icon-bg px-3 py-1 rounded-full mb-3 self-start">
+                {card.category}
+              </span>
+              <h3 className="font-heading font-bold text-navy text-xl leading-snug mb-2">
+                {card.name}
+              </h3>
+              <p className="text-body font-sans text-sm leading-relaxed mb-3 line-clamp-2">
+                {card.description}
+              </p>
+              <ul className="space-y-1 mb-4 flex-1">
+                {card.bullets.map(b => (
+                  <li key={b} className="flex items-start gap-2 text-body font-sans text-sm">
+                    <span className="w-2 h-2 rounded-full bg-accent mt-1.5 shrink-0" />
+                    {b}
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href="#contact"
+                className="block text-center border border-cta text-cta text-sm font-sans font-medium px-4 py-2.5 rounded-full hover:bg-orange-50 transition-colors"
+              >
+                Learn More
+              </Link>
+            </div>
+          </article>
+        ))}
+
+        {/* Explore More card */}
+        <article
+          className="showcase-card rounded-2xl flex-shrink-0 flex flex-col items-center justify-center px-10 py-12"
+          style={{ width: CARD_W, height: 560, backgroundColor: '#1A237E' }}
+        >
+          <h3 className="font-heading font-bold text-white text-3xl text-center leading-snug mb-3">
+            Explore Our Full Range
+          </h3>
+          <p className="text-slate-300 font-sans text-sm text-center mb-10 leading-relaxed">
+            Browse 18+ products across 9 categories
+          </p>
+          <Link
+            href="/products"
+            className="inline-flex items-center justify-center bg-cta text-white text-sm font-sans font-semibold px-8 py-3 rounded-full hover:bg-orange-600 transition-colors"
+          >
+            View All Products →
+          </Link>
+        </article>
+
+        {/* Trailing spacer */}
+        <div style={{ flexShrink: 0, width: EDGE_PAD - CARD_GAP }} />
+      </div>
+
+      {/* ── Dot indicators ───────────────────────────────────────────────── */}
+      <div className="flex justify-center items-center gap-2 mt-8">
+        {Array.from({ length: TOTAL_CARDS }).map((_, i) => (
+          <button
+            key={i}
+            onClick={() => scrollToCard(i)}
+            aria-label={`Go to card ${i + 1}`}
+            className="rounded-full transition-all duration-300 focus:outline-none"
+            style={{
+              width:           i === activeIdx ? 10 : 8,
+              height:          i === activeIdx ? 10 : 8,
+              backgroundColor: i === activeIdx ? '#1A237E' : '#D1D5DB',
+            }}
+          />
+        ))}
       </div>
     </section>
   )

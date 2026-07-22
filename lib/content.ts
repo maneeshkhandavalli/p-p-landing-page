@@ -47,19 +47,20 @@ export const heroMarqueeClients = [
   'Gr Power Switchgear',
 ]
 
-export const clients = [
-  'Toshiba Transmission of Distribution Systems Pvt Ltd',
-  'Amara Raja Advanced Cell Technologies Pvt Ltd',
-  'Cygni Energy Pvt Ltd',
-  'NED Energy Ltd',
-  'Quantum Energy Ltd',
-  'Sieger Technologies',
-  'Brisk Energy Pvt Ltd',
-  'Race Energy',
-  'HBL Power Systems Ltd',
-  'Gr Power Switchgear Limited',
-  'Siemens (Sub Contractor)',
-  'Switchgear & Structural Pvt. Ltd.',
+export interface Client {
+  name: string
+  logo: string
+  alt: string
+}
+
+export const clients: Client[] = [
+  { name: 'Toshiba Transmission of Distribution Systems Pvt Ltd', logo: '/images/clients/toshiba.gif', alt: 'Toshiba' },
+  { name: 'Amara Raja Advanced Cell Technologies Pvt Ltd', logo: '/images/clients/amara-raja.svg', alt: 'Amara Raja' },
+  { name: 'Cygni Energy Pvt Ltd', logo: '/images/clients/cygni.png', alt: 'Cygni Energy' },
+  { name: 'NED Energy Ltd', logo: '/images/clients/ned-energy.png', alt: 'NED Energy' },
+  { name: 'Quantum Energy Ltd', logo: '/images/clients/quantum-energy.webp', alt: 'Quantum Energy' },
+  { name: 'Race Energy', logo: '/images/clients/race-energy.png', alt: 'Race Energy' },
+  { name: 'HBL Power Systems Ltd', logo: '/images/clients/hbl.png', alt: 'HBL Power Systems' },
 ]
 
 export const products = [

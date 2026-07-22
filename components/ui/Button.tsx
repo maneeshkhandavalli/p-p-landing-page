@@ -17,7 +17,7 @@ const styles: Record<Variant, string> = {
   'orange-outline':
     'border-2 border-cta text-cta hover:bg-orange-50 hover:scale-[1.02] transition-all duration-200',
   'white-outline':
-    'border-2 border-white text-white hover:bg-white/10 hover:scale-[1.02] transition-all duration-200',
+    'border-2 border-white text-white hover:bg-white hover:text-[#1A237E] hover:scale-[1.02] transition-all duration-200',
   'navy-outline':
     'border-2 border-navy text-navy hover:bg-navy hover:text-white hover:scale-[1.02] transition-all duration-200',
   'green-filled':
@@ -25,7 +25,7 @@ const styles: Record<Variant, string> = {
 }
 
 const base =
-  'inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-sans font-medium text-sm transition-all duration-200 cursor-pointer'
+  'inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-sans font-medium text-sm transition-all duration-200 cursor-pointer'
 
 export function Button({
   children,

@@ -1,114 +1,168 @@
 'use client'
-import Image from 'next/image'
-import { heroStats, heroMarqueeClients } from '@/lib/content'
-import { Button } from '@/components/ui/Button'
-import { useScrollAnimation } from '@/lib/useScrollAnimation'
+import { heroStats } from '@/lib/content'
 import React from 'react'
 
-export default function Hero() {
-  const { ref, isVisible } = useScrollAnimation(0.05)
+// Logo path = null means render as styled text
+const clients = [
+  { name: 'Amara Raja',          logo: '/images/clients/amara-raja.svg' },
+  { name: 'HBL Power Systems',   logo: '/images/clients/hbl.png' },
+  { name: 'Cygni Energy',        logo: '/images/clients/cygni.png' },
+  { name: 'Race Energy',         logo: '/images/clients/race-energy.png' },
+  { name: 'Siemens',             logo: null },
+  { name: 'GR Power Switchgear', logo: null },
+  { name: 'Toshiba',             logo: '/images/clients/toshiba.gif' },
+  { name: 'NED Energy',          logo: '/images/clients/ned-energy.png' },
+  { name: 'Brisk',               logo: null },
+  { name: 'Quantum EV',          logo: '/images/clients/quantum-energy.webp' },
+]
 
-  const doubled = [
-    ...heroMarqueeClients,
-    ...heroMarqueeClients,
-    ...heroMarqueeClients,
-    ...heroMarqueeClients,
-  ]
-
-  const anim = (delay = 0): React.CSSProperties => ({
-    opacity: isVisible ? 1 : 0,
-    transform: isVisible ? 'translateY(0)' : 'translateY(24px)',
-    transition: `opacity 0.6s ease ${delay}ms, transform 0.6s ease ${delay}ms`,
-  })
-
+// One full list rendered twice; animation moves -50% = exactly one list width
+function ClientStrip() {
   return (
-    <section id="home" ref={ref as React.RefObject<HTMLElement>}>
-      {/* White content area */}
-      <div className="bg-white text-center px-6" style={{ paddingTop: '120px', paddingBottom: '48px' }}>
-        {/* Pill */}
-        <div style={anim(0)} className="inline-flex items-center gap-2 border border-accent text-accent text-[11px] font-sans font-semibold uppercase tracking-[0.12em] px-4 py-1.5 rounded-full mb-6 bg-accent/10">
-          ISO 9001:2015 Certified · Est. 2009 · Hyderabad
-        </div>
+    <div className="flex items-center">
+      {clients.map((client, i) => (
+        <React.Fragment key={i}>
+          {client.logo ? (
+            <img
+              src={client.logo}
+              alt={client.name}
+              style={{
+                height: '26px',
+                width: 'auto',
+                objectFit: 'contain',
+                filter: 'grayscale(1)',
+                opacity: 0.45,
+              }}
+            />
+          ) : (
+            <span className="font-sans text-sm font-semibold uppercase tracking-widest text-gray-500">
+              {client.name}
+            </span>
+          )}
+          {/* Dot after every item — trailing dot makes the junction seamless */}
+          <span className="text-[#F07B20] mx-4">·</span>
+        </React.Fragment>
+      ))}
+    </div>
+  )
+}
 
-        {/* Heading */}
-        <h1
-          style={{ ...anim(100), lineHeight: '1.1' }}
-          className="font-heading font-bold text-navy text-4xl sm:text-5xl md:text-[64px] max-w-4xl mx-auto mb-6"
+export default function Hero() {
+  return (
+    <section id="home" className="bg-[#f5f5f0]">
+
+      {/* ── Video card — equal margin all four sides ────────── */}
+      <div
+        className="relative m-3 md:m-4 rounded-2xl overflow-hidden"
+        style={{ height: '75vh' }}
+      >
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          style={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            zIndex: 0,
+          }}
         >
-          India&apos;s Trusted Sheet Metal Manufacturer
-        </h1>
+          <source src="/HerosectionVideo/Generate_all_clips_one_by_on(1).mp4" type="video/mp4" />
+        </video>
 
-        {/* Body */}
-        <p style={anim(200)} className="text-body font-sans text-lg max-w-[600px] mx-auto mb-10 leading-relaxed">
-          Precision fabricated EV enclosures, electrical panels, solar structures and more — delivered
-          from our ISO certified Hyderabad facility since 2009.
-        </p>
+        {/* Overlay */}
+        <div
+          className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/20 to-transparent"
+          style={{ zIndex: 1 }}
+        />
 
-        {/* Buttons */}
-        <div style={anim(300)} className="flex flex-wrap gap-4 justify-center mb-12">
-          <Button href="#products" variant="orange-filled" className="px-8 py-3 text-base rounded-lg">
-            Explore Products
-          </Button>
-          <Button href="#contact" variant="navy-outline" className="px-8 py-3 text-base rounded-lg">
-            Contact Us
-          </Button>
+        {/* Text — absolute center of the card */}
+        <div
+          className="absolute inset-0 flex flex-col items-center justify-center text-center px-8"
+          style={{ zIndex: 2 }}
+        >
+          <p
+            className="hero-anim font-sans text-xs tracking-widest uppercase text-white/50 mb-6"
+            style={{ animationDelay: '0.2s' }}
+          >
+            ISO 9001:2015 · Est. 2009 · Hyderabad
+          </p>
+
+          <h1 className="font-sans font-bold text-white leading-tight text-4xl md:text-6xl">
+            <span className="hero-anim block" style={{ animationDelay: '0.4s' }}>
+              Built in <span className="font-semibold text-white/90">Steel</span>.
+            </span>
+            <span className="hero-anim block" style={{ animationDelay: '0.6s' }}>
+              Trusted by <span className="font-semibold text-white/90">Industry</span>.
+            </span>
+          </h1>
+
+          <p
+            className="hero-anim font-sans text-base md:text-lg text-white/70 max-w-xl mt-4 leading-relaxed"
+            style={{ animationDelay: '0.8s' }}
+          >
+            Sheet metal fabrication from Hyderabad — EV, Solar, Electrical &amp; more.
+          </p>
+
+          <div
+            className="hero-anim flex justify-center flex-wrap gap-4 mt-8"
+            style={{ animationDelay: '1.0s' }}
+          >
+            <a
+              href="#products"
+              className="inline-flex items-center px-8 py-3 rounded-full bg-[#F07B20] text-white font-sans font-semibold text-sm hover:bg-[#d96a15] transition-all duration-200"
+              onClick={(e) => {
+                e.preventDefault()
+                document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })
+              }}
+            >
+              Explore Products
+            </a>
+            <a
+              href="#contact"
+              className="inline-flex items-center px-8 py-3 rounded-full border border-white/30 text-white font-sans font-semibold text-sm hover:bg-white/10 transition-all duration-200"
+              onClick={(e) => {
+                e.preventDefault()
+                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
+              }}
+            >
+              Contact Us
+            </a>
+          </div>
         </div>
+      </div>
 
-        {/* Stats */}
-        <div style={anim(400)} className="inline-flex flex-wrap justify-center">
+      {/* ── Stats bar — white, light dividers ────────────────── */}
+      <div className="bg-white border-t border-gray-100 py-10 px-12">
+        <div className="grid grid-cols-4 max-w-5xl mx-auto">
           {heroStats.map((stat, i) => (
-            <React.Fragment key={stat.label}>
-              {i > 0 && (
-                <div
-                  className="self-stretch w-px"
-                  style={{ backgroundColor: 'rgba(26,35,126,0.2)' }}
-                />
-              )}
-              <div className="px-8 py-2 text-center">
-                <div className="text-navy font-heading font-bold text-2xl sm:text-3xl">{stat.value}</div>
-                <div className="text-body font-sans text-sm mt-0.5">{stat.label}</div>
+            <div
+              key={stat.label}
+              className={`text-center ${i < heroStats.length - 1 ? 'border-r border-gray-100' : ''}`}
+            >
+              <div className="font-sans font-bold text-[#1A237E] text-4xl leading-none">
+                {stat.value}
               </div>
-            </React.Fragment>
+              <div className="font-sans text-xs uppercase tracking-widest text-gray-400 mt-1">
+                {stat.label}
+              </div>
+            </div>
           ))}
         </div>
       </div>
 
-      {/* Full-width factory image */}
-      <div
-        className="relative w-full overflow-hidden"
-        style={{ height: '480px', borderRadius: '20px 20px 0 0' }}
-      >
-        <Image
-          src="/images/sheet-metal-fabrication.png"
-          alt="P&P Engineering Works manufacturing facility"
-          fill
-          priority
-          className="object-cover object-center"
-        />
-      </div>
-
-      {/* Client strip */}
-      <div
-        className="bg-white overflow-hidden"
-        style={{ borderTop: '1px solid #E1E2E4', paddingTop: '16px', paddingBottom: '16px' }}
-      >
-        <div className="flex items-center gap-6 px-6">
-          <span className="text-accent font-sans text-sm font-semibold shrink-0">Trusted by:</span>
-          <div className="flex-1 overflow-hidden">
-            <div className="flex whitespace-nowrap marquee-left gap-10">
-              {doubled.map((client, i) => (
-                <span
-                  key={i}
-                  className="inline-flex items-center gap-3 text-navy font-sans text-sm font-medium shrink-0"
-                >
-                  <span className="w-1.5 h-1.5 rounded-full bg-accent inline-block shrink-0" />
-                  {client}
-                </span>
-              ))}
-            </div>
-          </div>
+      {/* ── Client marquee — off-white strip, seamless loop ─── */}
+      <div className="bg-gray-50 border-t border-gray-100 py-5 overflow-hidden">
+        {/* width:max-content + translateX(-50%) on a 2x list = perfect loop */}
+        <div style={{ animation: 'marquee 30s linear infinite', display: 'flex', width: 'max-content' }}>
+          <ClientStrip />
+          <ClientStrip />
         </div>
       </div>
+
     </section>
   )
 }

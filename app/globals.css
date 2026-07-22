@@ -18,6 +18,33 @@
   --font-heading: var(--font-playfair);
 }
 
+/* Hero staggered entrance */
+@keyframes hero-fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero-anim {
+  animation: hero-fade-up 0.6s ease-out both;
+}
+
+/* Spinning badge */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.spin-slow {
+  animation: spin-slow 12s linear infinite;
+}
+
+/* Scroll indicator chevron */
+@keyframes bounce-down {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(5px); }
+}
+.bounce-down {
+  animation: bounce-down 1.5s ease-in-out infinite;
+}
+
 /* Marquee animations */
 @keyframes marquee-left {
   from { transform: translateX(0); }
@@ -35,6 +62,12 @@
 
 .marquee-right {
   animation: marquee-right 35s linear infinite;
+}
+
+/* 2-copy marquee — moves -50% = one full list width */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
 /* Pause marquee on hover */
@@ -68,12 +101,13 @@ body {
   background-image: linear-gradient(to right, #D4691A 50%, #F07B20 50%);
   background-size: 200% 100%;
   background-position: 100% 0;
+  box-shadow: 0 0 20px rgba(240, 123, 32, 0.3);
   transition: background-position 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease !important;
 }
 .btn-orange-sweep:hover {
   background-position: 0% 0;
-  transform: scale(1.02);
-  box-shadow: 0 8px 24px rgba(240, 123, 32, 0.4);
+  transform: scale(1.05);
+  box-shadow: 0 8px 28px rgba(240, 123, 32, 0.5);
 }
 
 /* ── Navbar animated underline ──────────────────────────────────── */
@@ -151,6 +185,30 @@ a, button { cursor: pointer; }
   border: 1.5px solid #fff;
   border-radius: 999px;
   padding: 5px 16px;
+}
+
+/* ── Horizontal showcase track ──────────────────────────── */
+.showcase-track {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.showcase-track::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Showcase card hover ────────────────────────────────── */
+.showcase-card {
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.showcase-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 24px 56px rgba(26, 35, 126, 0.18);
+}
+.showcase-card-img {
+  transition: transform 0.4s ease;
+}
+.showcase-card:hover .showcase-card-img {
+  transform: scale(1.05);
 }
 
 body.js-loading > :not([data-loader]) {

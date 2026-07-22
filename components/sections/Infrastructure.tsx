@@ -48,7 +48,7 @@ export default function Infrastructure() {
         {/* Header */}
         <div className="text-center mb-12">
           <div style={anim(0)}><SectionLabel>Our Infrastructure</SectionLabel></div>
-          <h2 style={anim(100)} className="font-heading font-bold text-navy text-4xl md:text-5xl leading-tight mb-4">
+          <h2 style={{ ...anim(100), letterSpacing: '-0.02em' }} className="font-heading font-bold text-navy text-4xl md:text-[52px] leading-tight mb-4">
             Advanced Equipment &amp; Facility
           </h2>
           <AnimatedUnderline visible={isVisible} />

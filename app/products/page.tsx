@@ -7,7 +7,7 @@ import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import { productsData, productCategories } from '@/lib/productsData'
 
-const NAVBAR_H = 104 // h-14 (56px) top bar + h-12 (48px) links bar
+const NAVBAR_H = 64 // single-row sticky navbar (h-16)
 
 const SORT_OPTIONS = [
   { value: 'default', label: 'Default' },
@@ -58,7 +58,7 @@ function ProductsContent() {
           <div className="max-w-[1280px] mx-auto">
             <Link
               href="/"
-              className="inline-flex items-center gap-1.5 text-accent border border-accent text-sm font-sans font-medium px-4 py-2 rounded-lg transition-colors mb-6"
+              className="inline-flex items-center gap-1.5 text-accent border border-accent text-sm font-sans font-medium px-4 py-2 rounded-full transition-colors mb-6"
               style={{ '--hover-bg': '#E3EDF7' } as React.CSSProperties}
               onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#E3EDF7')}
               onMouseLeave={e => (e.currentTarget.style.backgroundColor = 'transparent')}
@@ -197,7 +197,7 @@ function ProductsContent() {
               </p>
               <Link
                 href="/#contact"
-                className="block text-center bg-cta text-white text-xs font-sans font-semibold px-4 py-2.5 rounded-lg hover:bg-orange-600 transition-colors"
+                className="block text-center bg-cta text-white text-xs font-sans font-semibold px-4 py-2.5 rounded-full hover:bg-orange-600 transition-colors"
               >
                 Get a Quote
               </Link>
@@ -252,9 +252,6 @@ function ProductsContent() {
                       </div>
                     </div>
                     <div className="px-4 pt-3 pb-4 flex flex-col flex-1">
-                      <span className="inline-block text-accent text-[10px] font-sans font-semibold uppercase tracking-wider bg-icon-bg px-2 py-0.5 rounded-full mb-2 self-start">
-                        {p.category}
-                      </span>
                       <p className="font-sans font-bold text-navy text-[14px] leading-snug mb-4 flex-1">
                         {p.name}
                       </p>
@@ -263,7 +260,7 @@ function ProductsContent() {
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={e => e.stopPropagation()}
-                        className="inline-flex items-center justify-center gap-1.5 text-cta border border-cta text-xs font-sans font-medium px-3 py-2 rounded-lg hover:bg-orange-50 transition-colors"
+                        className="inline-flex items-center justify-center gap-1.5 text-cta border border-cta text-xs font-sans font-medium px-3 py-2 rounded-full hover:bg-orange-50 transition-colors"
                       >
                         Enquire on IndiaMART
                         <span className="material-symbols-outlined" style={{ fontSize: '14px' }}>open_in_new</span>

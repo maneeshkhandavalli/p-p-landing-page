@@ -19,7 +19,7 @@ export default function HowItWorks() {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-14">
           <div style={anim(0)}><SectionLabel>Our Process</SectionLabel></div>
-          <h2 style={anim(100)} className="font-heading font-bold text-navy text-4xl md:text-5xl leading-tight">
+          <h2 style={{ ...anim(100), letterSpacing: '-0.02em' }} className="font-heading font-bold text-navy text-4xl md:text-[52px] leading-tight">
             Simple. Transparent. Reliable.
           </h2>
           <AnimatedUnderline visible={isVisible} />
@@ -33,16 +33,23 @@ export default function HowItWorks() {
             <div key={step.step} className="flex-1 flex flex-col md:flex-row items-stretch gap-0">
               <div
                 style={anim(200 + i * 100)}
-                className="relative z-10 flex-1 bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow mx-0 md:mx-3"
+                className="relative z-10 flex-1 bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow mx-0 md:mx-3 overflow-hidden"
               >
-                <span className="absolute top-4 right-5 font-heading font-bold text-5xl text-navy/10 select-none leading-none">
-                  {step.step}
+                {/* Large watermark step number */}
+                <span
+                  className="absolute top-2 right-3 font-heading font-bold select-none leading-none pointer-events-none"
+                  style={{ fontSize: 96, color: '#1A237E', opacity: 0.08 }}
+                >
+                  {String(step.step).padStart(2, '0')}
                 </span>
-                <div className="w-12 h-12 rounded-full flex items-center justify-center mb-4" style={{ backgroundColor: '#E3EDF7' }}>
-                  <span className="material-symbols-outlined text-accent text-2xl">{step.icon}</span>
+
+                <div className="relative z-10">
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center mb-4" style={{ backgroundColor: '#E3EDF7' }}>
+                    <span className="material-symbols-outlined text-accent text-2xl">{step.icon}</span>
+                  </div>
+                  <h3 className="font-heading font-bold text-navy text-lg mb-2">{step.title}</h3>
+                  <p className="text-body font-sans text-sm leading-relaxed">{step.description}</p>
                 </div>
-                <h3 className="font-heading font-bold text-navy text-lg mb-2">{step.title}</h3>
-                <p className="text-body font-sans text-sm leading-relaxed">{step.description}</p>
               </div>
 
               {i < howItWorks.length - 1 && (

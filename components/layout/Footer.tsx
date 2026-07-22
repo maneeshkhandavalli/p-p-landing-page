@@ -1,4 +1,6 @@
-import { company, products, navLinks } from '@/lib/content'
+import Link from 'next/link'
+import { company, products } from '@/lib/content'
+import { Button } from '@/components/ui/Button'
 
 export default function Footer() {
   return (
@@ -6,8 +8,27 @@ export default function Footer() {
       {/* Top accent line */}
       <div className="h-0.5 bg-accent" />
 
+      {/* Brand statement */}
+      <div className="max-w-7xl mx-auto px-6 pt-14 pb-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <h2
+          className="font-heading font-bold text-white leading-tight"
+          style={{ fontSize: 32, letterSpacing: '-0.01em' }}
+        >
+          Built in Hyderabad.<br className="hidden sm:block" /> Trusted across India.
+        </h2>
+        <div className="flex gap-3 shrink-0">
+          <Button href="#contact" variant="orange-filled">Get a Quote</Button>
+          <Button href="#contact" variant="white-outline">Contact Us</Button>
+        </div>
+      </div>
+
+      {/* Divider */}
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="h-px" style={{ backgroundColor: 'rgba(21, 101, 192, 0.45)' }} />
+      </div>
+
       {/* Main grid */}
-      <div className="max-w-7xl mx-auto px-6 py-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+      <div className="max-w-7xl mx-auto px-6 pt-10 pb-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
         {/* Col 1 — Brand */}
         <div className="lg:col-span-1">
           <h3 className="font-heading font-bold text-white text-xl mb-3">{company.name}</h3>
@@ -46,10 +67,8 @@ export default function Footer() {
           </h4>
           <ul className="space-y-2">
             {[
-              { label: 'About Us', href: '#about' },
               { label: 'Infrastructure', href: '#infrastructure' },
               { label: 'Clients', href: '#clients' },
-              { label: 'Gallery', href: '#gallery' },
               { label: 'Contact', href: '#contact' },
               { label: 'Star CNC Division', href: 'https://starcnc.in' },
             ].map((link) => (

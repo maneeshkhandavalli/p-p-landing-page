@@ -49,8 +49,8 @@ export default function Contact() {
         {/* Header */}
         <div style={anim(0)} className="text-center mb-12">
           <SectionLabel>Get in Touch</SectionLabel>
-          <h2 className="font-heading font-bold text-navy text-4xl md:text-5xl leading-tight">
-            Request a Quote or Visit Our Facility
+          <h2 className="font-heading font-bold text-navy text-4xl md:text-[52px] leading-tight" style={{ letterSpacing: '-0.02em' }}>
+            Let&apos;s Work Together.
           </h2>
           <AnimatedUnderline visible={isVisible} />
         </div>
@@ -121,7 +121,7 @@ export default function Contact() {
                 <button
                   type="submit"
                   disabled={status === 'loading'}
-                  className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-sans font-medium text-sm text-white btn-orange-sweep disabled:opacity-70 disabled:cursor-not-allowed transition-all duration-200"
+                  className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full font-sans font-medium text-sm text-white btn-orange-sweep disabled:opacity-70 disabled:cursor-not-allowed transition-all duration-200"
                 >
                   {status === 'loading' ? (
                     <>
