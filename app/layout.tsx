@@ -21,8 +21,9 @@ export const metadata: Metadata = {
   description:
     'P&P Engineering Works is an ISO 9001:2015 certified manufacturer of electrical enclosures, EV battery casings, solar structures and precision sheet metal products in Hyderabad.',
   icons: {
-    icon: '/favicon.png',
-    apple: '/favicon.png',
+    icon: '/images/logo-withoutbg.png',
+    shortcut: '/images/logo-withoutbg.png',
+    apple: '/images/logo-withoutbg.png',
   },
 }
 

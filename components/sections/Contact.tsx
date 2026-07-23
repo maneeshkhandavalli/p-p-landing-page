@@ -192,8 +192,8 @@ export default function Contact() {
             {/* Star CNC link */}
             <p className="text-body font-sans text-sm text-center">
               Also visit our laser cutting division:{' '}
-              <a href="https://starcnc.in" className="text-accent font-medium hover:underline">
-                starcnc.in
+              <a href="https://starcnc.vercel.app" className="text-accent font-medium hover:underline">
+                starcnc.vercel.app
               </a>
             </p>
           </div>

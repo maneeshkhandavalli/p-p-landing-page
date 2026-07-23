@@ -55,8 +55,8 @@ export default function StarCNCDivision() {
                 ))}
               </div>
               <div style={anim(500)}>
-                <Button href="https://starcnc.in" variant="navy-outline" className="self-start">
-                  Visit starcnc.in
+                <Button href="https://starcnc.vercel.app" variant="navy-outline" className="self-start">
+                  Visit starcnc.vercel.app
                 </Button>
               </div>
             </div>

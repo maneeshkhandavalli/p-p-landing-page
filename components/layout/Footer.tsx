@@ -70,7 +70,7 @@ export default function Footer() {
               { label: 'Infrastructure', href: '#infrastructure' },
               { label: 'Clients', href: '#clients' },
               { label: 'Contact', href: '#contact' },
-              { label: 'Star CNC Division', href: 'https://starcnc.in' },
+              { label: 'Star CNC Division', href: 'https://starcnc.vercel.app' },
             ].map((link) => (
               <li key={link.label}>
                 <a
