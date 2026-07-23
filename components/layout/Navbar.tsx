@@ -52,7 +52,7 @@ export default function Navbar() {
   }, [])
 
   return (
-    <header className="sticky top-0 left-0 right-0 z-50 w-full bg-[#1A237E] border-b border-white/10">
+    <header className="sticky top-0 z-50 w-full bg-[#1A237E]/25 backdrop-blur-md border-b border-white/10">
       <div className="max-w-7xl mx-auto px-6 md:px-8 py-3 flex items-center">
 
         {/* Logo + phone pill */}
@@ -70,7 +70,7 @@ export default function Navbar() {
 
           <a
             href={`tel:${company.phone[0].replace(/\s/g, '')}`}
-            className="hidden md:inline-flex items-center gap-1.5 bg-white/10 rounded-full px-3 py-1 text-white/80 text-sm font-sans hover:text-white transition-colors ml-4"
+            className="hidden md:inline-flex items-center gap-1.5 bg-white/10 border border-white/20 rounded-full px-3 py-1 text-white/80 text-sm font-sans hover:text-white transition-colors ml-4"
           >
             <span className="material-symbols-outlined" style={{ fontSize: '14px' }}>phone</span>
             {company.phone[0]}

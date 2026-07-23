@@ -30,8 +30,7 @@ function ClientStrip() {
                 height: '26px',
                 width: 'auto',
                 objectFit: 'contain',
-                filter: 'grayscale(1)',
-                opacity: 0.45,
+                filter: 'none',
               }}
             />
           ) : (
@@ -51,9 +50,9 @@ export default function Hero() {
   return (
     <section id="home" className="bg-[#f5f5f0]">
 
-      {/* ── Video card — equal margin all four sides ────────── */}
+      {/* ── Video card ── */}
       <div
-        className="relative m-3 md:m-4 rounded-2xl overflow-hidden"
+        className="relative m-4 rounded-2xl overflow-hidden"
         style={{ height: '75vh' }}
       >
         <video
