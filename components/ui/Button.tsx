@@ -36,7 +36,18 @@ export function Button({
   type = 'button',
 }: ButtonProps) {
   const cls = `${base} ${styles[variant]} ${className}`
-  if (href) return <a href={href} className={cls}>{children}</a>
+  if (href) {
+    const isExternal = href.startsWith('http')
+    return (
+      <a
+        href={href}
+        className={cls}
+        {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+      >
+        {children}
+      </a>
+    )
+  }
   return (
     <button type={type} onClick={onClick} className={cls}>
       {children}

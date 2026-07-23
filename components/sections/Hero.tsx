@@ -84,7 +84,7 @@ export default function Hero() {
         <div className="absolute inset-0 bg-black/50" />
 
         {/* ── Top-left text content ── */}
-        <div className="absolute top-0 left-0 p-8 pb-8 md:p-12 lg:p-16 max-w-2xl z-10 flex flex-col justify-end md:justify-center h-full">
+        <div className="absolute top-0 left-0 p-8 pb-32 md:p-12 md:pb-12 lg:p-16 max-w-2xl z-10 flex flex-col justify-end md:justify-center h-full">
           {/* Desktop ISO badge */}
           <p
             className={`hero-enter ${animate ? 'animate' : ''} hidden md:block text-xs tracking-[0.2em] uppercase text-white/50 mb-5`}

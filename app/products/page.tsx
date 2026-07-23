@@ -237,7 +237,10 @@ function ProductsContent() {
                   <div
                     key={`${p.category}-${p.name}`}
                     className="catalogue-card bg-white border border-gray-200 rounded-[8px] shadow-sm flex flex-col overflow-hidden"
+                    role="button"
+                    tabIndex={0}
                     onClick={() => window.open(p.indiamartUrl, '_blank', 'noopener,noreferrer')}
+                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') window.open(p.indiamartUrl, '_blank', 'noopener,noreferrer') }}
                   >
                     <div className="relative w-full overflow-hidden" style={{ height: 180 }}>
                       <Image
