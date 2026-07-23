@@ -16,13 +16,6 @@ const clients = [
   { name: 'Quantum EV',          logo: '/images/clients/quantum-energy.webp' },
 ]
 
-const capabilities = [
-  { icon: 'precision_manufacturing', label: 'CNC Bending' },
-  { icon: 'content_cut',             label: 'Laser Cutting' },
-  { icon: 'format_paint',            label: 'Powder Coating' },
-  { icon: 'bolt',                    label: 'TIG Welding' },
-]
-
 // One full list rendered twice; animation moves -50% = exactly one list width
 function ClientStrip() {
   return (
@@ -122,46 +115,29 @@ export default function Hero() {
           className={`hero-enter ${animate ? 'animate' : ''} absolute bottom-0 right-0 m-6 md:m-10 lg:m-14 z-10 hidden md:block`}
           style={{ transitionDelay: '750ms' }}
         >
-          <div className="bg-white rounded-2xl p-6 md:p-8 w-[420px] shadow-2xl">
-            <p className="text-sm font-semibold text-[#1A237E] uppercase tracking-wider mb-1">
-              Get in touch
-            </p>
-            <p className="text-xs text-gray-400 mb-5">
-              Talk to our team about your requirements
-            </p>
-
-            {/* Capability icons row */}
-            <div className="grid grid-cols-4 gap-3 mb-6">
-              {capabilities.map((cap) => (
-                <div key={cap.label} className="flex flex-col items-center gap-1.5">
-                  <div className="w-10 h-10 rounded-xl bg-[#1A237E]/5 flex items-center justify-center">
-                    <span className="material-symbols-outlined text-[#1A237E]" style={{ fontSize: '20px' }}>{cap.icon}</span>
-                  </div>
-                  <span className="text-[10px] font-medium text-gray-500 text-center leading-tight">{cap.label}</span>
-                </div>
-              ))}
+          <div className="bg-white rounded-2xl p-6 md:p-8 w-[420px] shadow-2xl h-auto">
+            <div className="flex flex-col gap-3">
+              <a
+                href="#products"
+                className="block w-full bg-[#F07B20] text-white font-semibold py-3 rounded-xl hover:bg-[#d96a15] transition-colors text-sm text-center"
+                onClick={(e) => {
+                  e.preventDefault()
+                  document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })
+                }}
+              >
+                Explore Products
+              </a>
+              <a
+                href="#contact"
+                className="block w-full border border-[#1A237E] text-[#1A237E] font-semibold py-3 rounded-xl hover:bg-[#1A237E] hover:text-white transition-colors text-sm text-center"
+                onClick={(e) => {
+                  e.preventDefault()
+                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
+                }}
+              >
+                Contact Us
+              </a>
             </div>
-
-            <a
-              href="#products"
-              className="block w-full bg-[#F07B20] text-white font-semibold py-3 rounded-xl mb-3 hover:bg-[#d96a15] transition-colors text-sm text-center"
-              onClick={(e) => {
-                e.preventDefault()
-                document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })
-              }}
-            >
-              Explore Products
-            </a>
-            <a
-              href="#contact"
-              className="block w-full border border-[#1A237E] text-[#1A237E] font-semibold py-3 rounded-xl hover:bg-[#1A237E] hover:text-white transition-colors text-sm text-center"
-              onClick={(e) => {
-                e.preventDefault()
-                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
-              }}
-            >
-              Contact Us
-            </a>
 
             <p className="text-[11px] text-gray-400 text-center mt-4">
               ISO 9001:2015 Certified · Est. 2009 · Hyderabad
