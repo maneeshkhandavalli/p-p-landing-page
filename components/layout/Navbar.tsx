@@ -60,7 +60,7 @@ export default function Navbar() {
       </div>
 
       {/* ── Navbar ── */}
-      <header className="sticky top-0 z-50 w-full bg-white border-b border-gray-200 shadow-sm">
+      <header className="sticky top-0 z-50 w-full bg-[#1A237E] md:bg-white border-b border-gray-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 md:px-8 py-3 flex items-center justify-between">
 
           {/* Logo + phone pill */}
@@ -72,6 +72,7 @@ export default function Navbar() {
               <img
                 src="/images/logo-withoutbg.png"
                 alt="P&P Engineering Works"
+                className="brightness-0 invert md:brightness-100 md:invert-0"
                 style={{ height: '36px', width: 'auto' }}
               />
             </a>
@@ -157,9 +158,9 @@ export default function Navbar() {
               onClick={() => setMenuOpen((o) => !o)}
               aria-label="Toggle menu"
             >
-              <span className={`block w-6 h-0.5 bg-[#1A237E] transition-all duration-[250ms] ease-in-out ${menuOpen ? 'rotate-45 translate-y-2' : ''}`} />
-              <span className={`block w-6 h-0.5 bg-[#1A237E] transition-all duration-[250ms] ease-in-out ${menuOpen ? 'opacity-0' : ''}`} />
-              <span className={`block w-6 h-0.5 bg-[#1A237E] transition-all duration-[250ms] ease-in-out ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+              <span className={`block w-6 h-0.5 bg-white md:bg-[#1A237E] transition-all duration-[250ms] ease-in-out ${menuOpen ? 'rotate-45 translate-y-2' : ''}`} />
+              <span className={`block w-6 h-0.5 bg-white md:bg-[#1A237E] transition-all duration-[250ms] ease-in-out ${menuOpen ? 'opacity-0' : ''}`} />
+              <span className={`block w-6 h-0.5 bg-white md:bg-[#1A237E] transition-all duration-[250ms] ease-in-out ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
             </button>
           </div>
         </div>

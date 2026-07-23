@@ -68,7 +68,7 @@ export default function Hero() {
     <section id="home" className="bg-white">
 
       {/* ── Video area — smaller container, not full screen ── */}
-      <div className="relative w-full mx-4 rounded-2xl overflow-hidden" style={{ height: '72vh', width: 'calc(100% - 2rem)' }}>
+      <div className="relative w-full mx-4 mt-3 md:mt-0 rounded-2xl overflow-hidden" style={{ height: '72vh', width: 'calc(100% - 2rem)' }}>
         {/* Video — edge to edge */}
         <video
           autoPlay
