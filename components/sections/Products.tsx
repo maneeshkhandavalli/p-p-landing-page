@@ -1,172 +1,244 @@
 'use client'
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useRef, useState } from 'react'
 import { SectionLabel } from '@/components/ui/SectionLabel'
+import { AnimatedUnderline } from '@/components/ui/AnimatedUnderline'
+import { useScrollAnimation } from '@/lib/useScrollAnimation'
 
-const products = [
+const CARD_W   = 420
+const CARD_GAP = 24
+const EDGE_PAD = 48
+
+const showcaseCards = [
   {
+    image:       '/images/electrical-enclosure.png',
+    badge:       { label: 'MOST POPULAR', color: '#F07B20' },
     category:    'ELECTRICAL',
     name:        'Electronic & Electrical Enclosures',
-    description: 'Custom IP-rated enclosures for industrial control panels and distribution boards.',
-    image:       '/images/electrical-enclosure.png',
-    href:        'https://www.indiamart.com/proddetail/electrical-metal-cabinets-23019950591.html',
+    description: 'Custom IP-rated enclosures for industrial control panels and distribution boards',
+    bullets:     ['Custom IP ratings available', 'Control panels and distribution boards', 'Fabricated to exact specifications'],
   },
   {
+    image:       '/images/ev-battery.png',
+    badge:       { label: 'EV SECTOR', color: '#16A34A' },
     category:    'EV AUTOMOTIVE',
     name:        'EV Battery Enclosures & Child Parts',
-    description: 'Lightweight high-strength housings for electric vehicle battery systems.',
-    image:       '/images/ev-battery.png',
-    href:        'https://www.indiamart.com/proddetail/ev-battery-enclosure-23089070733.html',
+    description: 'Lightweight high-strength housings for electric vehicle battery systems',
+    bullets:     ['High-strength lightweight build', 'Mounting brackets and child parts', 'Trusted by Amara Raja and Cygni Energy'],
   },
   {
+    image:       '/images/solar-structure.png',
+    badge:       { label: 'HIGH DEMAND', color: '#1565C0' },
     category:    'SOLAR',
     name:        'Solar Structures & Street Light Poles',
-    description: 'Mounting structures for commercial and industrial solar installations.',
-    image:       '/images/solar-structure.png',
-    href:        'https://www.indiamart.com/proddetail/solar-streetlight-poles-structures-22031890530.html',
+    description: 'Mounting structures for commercial and industrial solar installations',
+    bullets:     ['Hot-rolled mild steel construction', 'Commercial and industrial scale', 'Galvanised for weather resistance'],
   },
   {
+    image:       '/images/sheet-metal.png',
+    badge:       { label: 'CUSTOM MADE', color: '#4A5568' },
     category:    'SHEET METAL',
     name:        'General Sheet Metal Products',
-    description: 'Cabinets, racks, lockers, trolleys and custom fabricated metal products.',
-    image:       '/images/sheet-metal.png',
-    href:        'https://www.indiamart.com/proddetail/sheet-metal-fabrications-4390046791.html',
+    description: 'Cabinets, racks, lockers, trolleys and custom fabricated metal products',
+    bullets:     ['Cabinets, racks and lockers', 'Custom dimensions available', 'Industrial and institutional clients'],
   },
   {
+    image:       '/images/powder-coating.png',
+    badge:       { label: 'IN-HOUSE', color: '#1A237E' },
     category:    'FINISHING',
     name:        'In-House Powder Coating',
-    description: 'Full powder coating facility with complete RAL colour range in-house.',
-    image:       '/images/powder-coating.png',
-    href:        '/products',
+    description: 'Full powder coating facility with complete RAL colour range in-house',
+    bullets:     ['Complete RAL colour range', 'No third-party delays', 'Faster turnaround and tighter QC'],
   },
 ]
 
+const TOTAL_CARDS = showcaseCards.length + 1 // +1 for Explore More
+
 export default function Products() {
-  const sectionRef                      = useRef<HTMLDivElement>(null)
-  const cardRef                         = useRef<HTMLDivElement>(null)
-  const isAnimRef                       = useRef(false)
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [displayedIdx, setDisplayedIdx] = useState(0)
+  const { ref, isVisible } = useScrollAnimation()
+  const trackRef           = useRef<HTMLDivElement>(null)
+  const [activeIdx, setActiveIdx] = useState(0)
 
-  // Scroll driver — only currentIndex goes into state
-  useEffect(() => {
-    const onScroll = () => {
-      const el = sectionRef.current
-      if (!el) return
-      const rect     = el.getBoundingClientRect()
-      const scrolled = -rect.top
-      const total    = el.offsetHeight - window.innerHeight
-      const progress = Math.max(0, Math.min(1, scrolled / total))
-      const idx      = Math.min(Math.floor(progress * products.length), products.length - 1)
-      setCurrentIndex(idx)
-    }
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+  const anim = (delay = 0): React.CSSProperties => ({
+    opacity:    isVisible ? 1 : 0,
+    transform:  isVisible ? 'translateY(0)' : 'translateY(24px)',
+    transition: `opacity 0.6s ease ${delay}ms, transform 0.6s ease ${delay}ms`,
+  })
 
-  // Card swap animation — driven by ref, not CSS transitions on state
-  useEffect(() => {
-    const card = cardRef.current
-    if (!card || currentIndex === displayedIdx || isAnimRef.current) return
+  const scrollTrack = (dir: 'left' | 'right') => {
+    trackRef.current?.scrollBy({ left: dir === 'right' ? CARD_W + CARD_GAP : -(CARD_W + CARD_GAP), behavior: 'smooth' })
+    setActiveIdx(prev => {
+      const next = dir === 'right' ? prev + 1 : prev - 1
+      return Math.max(0, Math.min(next, TOTAL_CARDS - 1))
+    })
+  }
 
-    isAnimRef.current = true
-
-    // Slide out
-    card.style.transition = 'transform 250ms ease'
-    card.style.transform  = 'translateY(-100%)'
-
-    const t = setTimeout(() => {
-      // Swap content
-      setDisplayedIdx(currentIndex)
-      card.style.transition = 'none'
-      card.style.transform  = 'translateY(100%)'
-      void card.offsetHeight                      // force reflow
-      card.style.transition = 'transform 350ms ease'
-      card.style.transform  = 'translateY(0)'
-      setTimeout(() => { isAnimRef.current = false }, 350)
-    }, 250)
-
-    return () => clearTimeout(t)
-  }, [currentIndex, displayedIdx])
-
-  const product = products[displayedIdx]
+  const scrollToCard = (idx: number) => {
+    trackRef.current?.scrollTo({ left: idx * (CARD_W + CARD_GAP), behavior: 'smooth' })
+    setActiveIdx(idx)
+  }
 
   return (
-    <section id="products">
-      <div
-        ref={sectionRef}
-        style={{ height: '600vh' }}
-        className="relative"
-      >
-        {/* Sticky viewport — holds everything while user scrolls the 600vh budget */}
-        <div className="sticky top-0 h-screen overflow-hidden bg-white flex flex-col items-center justify-center gap-6">
-
-          {/* Section label + heading */}
-          <div className="text-center">
-            <SectionLabel>What We Manufacture</SectionLabel>
-            <h2
-              className="font-heading font-bold text-navy text-3xl md:text-4xl leading-tight mt-2"
-              style={{ letterSpacing: '-0.02em' }}
-            >
-              Our Product Range
-            </h2>
-          </div>
-
-          {/* Card — outer div clips the slide animation */}
-          <div
-            className="rounded-[20px] overflow-hidden"
-            style={{ width: 340, height: 320 }}
-          >
-            <div
-              ref={cardRef}
-              className="relative rounded-[20px] overflow-hidden"
-              style={{ width: 340, height: 320 }}
-            >
-              <Image
-                src={product.image}
-                alt={product.name}
-                fill
-                className="object-cover"
-                sizes="340px"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#050a28]/90 via-[#050a28]/30 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-6">
-                <p className="text-[10px] tracking-[2.5px] uppercase text-white/45 mb-2">
-                  {product.category}
-                </p>
-                <h3 className="text-xl font-bold text-white mb-2 leading-tight">
-                  {product.name}
-                </h3>
-                <p className="text-xs text-white/60 leading-relaxed mb-4">
-                  {product.description}
-                </p>
-                <Link
-                  href={product.href}
-                  target={product.href.startsWith('http') ? '_blank' : undefined}
-                  rel={product.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  className="inline-block bg-[#F07B20] text-white text-xs font-semibold px-5 py-2 rounded-full hover:bg-[#d96a15] transition-colors"
-                >
-                  Enquire on IndiaMART →
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          {/* Progress bar */}
-          <div className="h-[2px] bg-gray-100 rounded" style={{ width: 340 }}>
-            <div
-              className="bg-[#F07B20] h-full rounded transition-all duration-500"
-              style={{ width: `${((currentIndex + 1) / products.length) * 100}%` }}
-            />
-          </div>
-
-          {/* Counter */}
-          <p className="text-xs text-gray-400 tracking-wider tabular-nums select-none">
-            {String(currentIndex + 1).padStart(2, '0')} / {String(products.length).padStart(2, '0')}
-          </p>
-
+    <section
+      id="products"
+      ref={ref as React.RefObject<HTMLElement>}
+      className="bg-white py-20"
+    >
+      {/* ── Section heading ──────────────────────────────────────────────── */}
+      <div className="max-w-7xl mx-auto px-6 text-center mb-8">
+        <div style={anim(0)}>
+          <SectionLabel>What We Manufacture</SectionLabel>
         </div>
+        <h2
+          style={{ ...anim(100), letterSpacing: '-0.02em' }}
+          className="font-heading font-bold text-navy text-4xl md:text-[52px] leading-tight"
+        >
+          Our Product Range
+        </h2>
+        <AnimatedUnderline visible={isVisible} />
+        <p style={anim(200)} className="text-body font-sans text-lg max-w-2xl mx-auto mt-4">
+          Five specialised product lines serving India&apos;s most demanding industrial sectors
+        </p>
+      </div>
+
+      {/* ── Arrow controls ───────────────────────────────────────────────── */}
+      <div
+        style={anim(250)}
+        className="max-w-7xl mx-auto px-6 flex justify-end gap-3 mb-5"
+      >
+        <button
+          onClick={() => scrollTrack('left')}
+          aria-label="Scroll left"
+          className="w-12 h-12 rounded-full bg-navy flex items-center justify-center transition-opacity hover:opacity-80"
+        >
+          <span className="material-symbols-outlined text-white" style={{ fontSize: '22px' }}>
+            arrow_back
+          </span>
+        </button>
+        <button
+          onClick={() => scrollTrack('right')}
+          aria-label="Scroll right"
+          className="w-12 h-12 rounded-full bg-navy flex items-center justify-center transition-opacity hover:opacity-80"
+        >
+          <span className="material-symbols-outlined text-white" style={{ fontSize: '22px' }}>
+            arrow_forward
+          </span>
+        </button>
+      </div>
+
+      {/* ── Horizontal scroll track ──────────────────────────────────────── */}
+      <div
+        ref={trackRef}
+        className="showcase-track flex overflow-x-hidden"
+        style={{ gap: CARD_GAP, paddingLeft: EDGE_PAD }}
+      >
+        {/* Product cards */}
+        {showcaseCards.map(card => (
+          <article
+            key={card.name}
+            className="showcase-card bg-white rounded-2xl shadow-md flex flex-col flex-shrink-0 overflow-hidden"
+            style={{ width: CARD_W, height: 560 }}
+          >
+            {/* Image — top 360px */}
+            <div className="relative flex-shrink-0 overflow-hidden" style={{ height: 360 }}>
+              <Image
+                src={card.image}
+                alt={card.name}
+                fill
+                className="showcase-card-img object-cover"
+              />
+              <div
+                className="absolute bottom-0 left-0 right-0 pointer-events-none"
+                style={{ height: 80, background: 'linear-gradient(to top, rgba(0,0,0,0.55), transparent)' }}
+              />
+              <span
+                style={{
+                  position:        'absolute',
+                  top:             12,
+                  left:            12,
+                  backgroundColor: card.badge.color,
+                  color:           '#ffffff',
+                  fontSize:        10,
+                  fontFamily:      'var(--font-inter), sans-serif',
+                  fontWeight:      700,
+                  textTransform:   'uppercase',
+                  letterSpacing:   '1px',
+                  padding:         '4px 10px',
+                  borderRadius:    100,
+                }}
+              >
+                {card.badge.label}
+              </span>
+            </div>
+
+            {/* Content */}
+            <div className="flex flex-col flex-1 px-5 pt-4 pb-5">
+              <span className="inline-block text-accent text-[10px] font-sans font-semibold uppercase tracking-wider bg-icon-bg px-3 py-1 rounded-full mb-3 self-start">
+                {card.category}
+              </span>
+              <h3 className="font-heading font-bold text-navy text-xl leading-snug mb-2">
+                {card.name}
+              </h3>
+              <p className="text-body font-sans text-sm leading-relaxed mb-3 line-clamp-2">
+                {card.description}
+              </p>
+              <ul className="space-y-1 mb-4 flex-1">
+                {card.bullets.map(b => (
+                  <li key={b} className="flex items-start gap-2 text-body font-sans text-sm">
+                    <span className="w-2 h-2 rounded-full bg-accent mt-1.5 shrink-0" />
+                    {b}
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href="#contact"
+                className="block text-center border border-cta text-cta text-sm font-sans font-medium px-4 py-2.5 rounded-full hover:bg-orange-50 transition-colors"
+              >
+                Learn More
+              </Link>
+            </div>
+          </article>
+        ))}
+
+        {/* Explore More card */}
+        <article
+          className="showcase-card rounded-2xl flex-shrink-0 flex flex-col items-center justify-center px-10 py-12"
+          style={{ width: CARD_W, height: 560, backgroundColor: '#1A237E' }}
+        >
+          <h3 className="font-heading font-bold text-white text-3xl text-center leading-snug mb-3">
+            Explore Our Full Range
+          </h3>
+          <p className="text-slate-300 font-sans text-sm text-center mb-10 leading-relaxed">
+            Browse 18+ products across 9 categories
+          </p>
+          <Link
+            href="/products"
+            className="inline-flex items-center justify-center bg-cta text-white text-sm font-sans font-semibold px-8 py-3 rounded-full hover:bg-orange-600 transition-colors"
+          >
+            View All Products →
+          </Link>
+        </article>
+
+        {/* Trailing spacer */}
+        <div style={{ flexShrink: 0, width: EDGE_PAD - CARD_GAP }} />
+      </div>
+
+      {/* ── Dot indicators ───────────────────────────────────────────────── */}
+      <div className="flex justify-center items-center gap-2 mt-8">
+        {Array.from({ length: TOTAL_CARDS }).map((_, i) => (
+          <button
+            key={i}
+            onClick={() => scrollToCard(i)}
+            aria-label={`Go to card ${i + 1}`}
+            className="rounded-full transition-all duration-300 focus:outline-none"
+            style={{
+              width:           i === activeIdx ? 10 : 8,
+              height:          i === activeIdx ? 10 : 8,
+              backgroundColor: i === activeIdx ? '#1A237E' : '#D1D5DB',
+            }}
+          />
+        ))}
       </div>
     </section>
   )
