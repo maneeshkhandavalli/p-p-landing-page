@@ -68,7 +68,10 @@ export default function Products() {
   })
 
   const scrollTrack = (dir: 'left' | 'right') => {
-    trackRef.current?.scrollBy({ left: dir === 'right' ? CARD_W + CARD_GAP : -(CARD_W + CARD_GAP), behavior: 'smooth' })
+    const track = trackRef.current
+    if (!track) return
+    const step = window.innerWidth < 768 ? track.offsetWidth : CARD_W + CARD_GAP
+    track.scrollBy({ left: dir === 'right' ? step : -step, behavior: 'smooth' })
     setActiveIdx(prev => {
       const next = dir === 'right' ? prev + 1 : prev - 1
       return Math.max(0, Math.min(next, TOTAL_CARDS - 1))
@@ -76,7 +79,10 @@ export default function Products() {
   }
 
   const scrollToCard = (idx: number) => {
-    trackRef.current?.scrollTo({ left: idx * (CARD_W + CARD_GAP), behavior: 'smooth' })
+    const track = trackRef.current
+    if (!track) return
+    const pos = window.innerWidth < 768 ? idx * track.offsetWidth : idx * (CARD_W + CARD_GAP)
+    track.scrollTo({ left: pos, behavior: 'smooth' })
     setActiveIdx(idx)
   }
 
@@ -141,8 +147,8 @@ export default function Products() {
       {/* ── Horizontal scroll track ──────────────────────────────────────── */}
       <div
         ref={trackRef}
-        className="showcase-track flex overflow-x-hidden pl-4 md:pl-[48px]"
-        style={{ gap: CARD_GAP }}
+        className="showcase-track flex overflow-x-auto pl-4 md:pl-[48px]"
+        style={{ gap: CARD_GAP, scrollSnapType: 'x mandatory', scrollBehavior: 'smooth' }}
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
       >
@@ -150,7 +156,7 @@ export default function Products() {
         {showcaseCards.map(card => (
           <article
             key={card.name}
-            className="showcase-card bg-white rounded-2xl shadow-md flex flex-col flex-shrink-0 overflow-hidden w-[calc(100vw-32px)] md:w-[420px]"
+            className="showcase-card bg-white rounded-2xl shadow-md flex flex-col flex-shrink-0 overflow-hidden w-[calc(100vw-32px)] md:w-[420px] snap-start"
           >
             {/* Image — top 360px */}
             <div className="relative flex-shrink-0 overflow-hidden h-48 md:h-[360px]">
@@ -215,7 +221,7 @@ export default function Products() {
 
         {/* Explore More card */}
         <article
-          className="showcase-card rounded-2xl flex-shrink-0 flex flex-col items-center justify-center px-10 py-12 w-[calc(100vw-32px)] md:w-[420px]"
+          className="showcase-card rounded-2xl flex-shrink-0 flex flex-col items-center justify-center px-10 py-12 w-[calc(100vw-32px)] md:w-[420px] snap-start"
           style={{ height: 560, backgroundColor: '#1A237E' }}
         >
           <h3 className="font-heading font-bold text-white text-3xl text-center leading-snug mb-3">
