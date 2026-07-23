@@ -191,23 +191,20 @@ export default function Hero() {
 
       {/* ── Stats bar — inside the hero section, below video ────────────────── */}
       <div className="bg-white border-t border-gray-100 md:pt-8 md:pb-4 md:px-12">
-        <div className="grid grid-cols-2 md:grid-cols-4 md:gap-0 md:max-w-6xl md:mx-auto">
-          {heroStats.map((stat, i) => {
-            const mobileBorders = ['border-r border-b', 'border-b', 'border-r', ''][i]
-            return (
-              <div
-                key={stat.label}
-                className={`text-center flex flex-col items-center justify-center p-4 md:p-6 border-gray-100 ${mobileBorders} md:border-b-0 ${i < heroStats.length - 1 ? 'md:border-r' : ''}`}
-              >
-                <div className={`font-sans font-bold text-[#1A237E] leading-none ${i === 1 ? 'text-lg md:text-4xl' : 'text-2xl md:text-4xl'}`}>
-                  {stat.value}
-                </div>
-                <div className="font-sans text-[10px] md:text-xs uppercase tracking-wider text-gray-400 mt-1 md:mt-2 text-center">
-                  {stat.label}
-                </div>
+        <div className="grid grid-cols-2 md:flex md:flex-row md:max-w-6xl md:mx-auto">
+          {heroStats.map((stat, i) => (
+            <div
+              key={stat.label}
+              className="flex flex-col items-center justify-center p-5 border-b border-r border-gray-100 even:border-r-0 [&:nth-child(n+3)]:border-b-0 md:flex-1 md:border-b-0 md:even:border-r md:last:border-r-0"
+            >
+              <div className={`font-sans font-bold text-[#1A237E] leading-none ${i === 1 ? 'text-base md:text-2xl' : 'text-2xl md:text-4xl'}`}>
+                {stat.value}
               </div>
-            )
-          })}
+              <div className="font-sans text-[9px] md:text-xs uppercase tracking-widest text-gray-400 mt-1 text-center">
+                {stat.label}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 

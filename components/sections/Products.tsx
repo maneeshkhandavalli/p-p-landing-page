@@ -159,11 +159,12 @@ export default function Products() {
             className="showcase-card bg-white rounded-2xl shadow-md flex flex-col flex-shrink-0 overflow-hidden w-[calc(100vw-32px)] md:w-[420px] snap-start"
           >
             {/* Image — top 360px */}
-            <div className="relative flex-shrink-0 overflow-hidden h-48 md:h-[360px]">
+            <div className="w-full h-52 overflow-hidden relative rounded-t-xl">
               <Image
                 src={card.image}
                 alt={card.name}
                 fill
+                sizes="(max-width: 768px) 100vw, 33vw"
                 className="showcase-card-img object-cover"
               />
               <div
