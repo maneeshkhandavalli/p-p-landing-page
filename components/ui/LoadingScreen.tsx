@@ -1,148 +1,110 @@
 'use client'
-import { useState, useEffect, useLayoutEffect } from 'react'
-
-// useLayoutEffect runs before browser paint — prevents the 1-frame white flash on skip
-const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect
+import { useEffect, useState } from 'react'
 
 export default function LoadingScreen() {
-  const [visible, setVisible] = useState(true)
-  const [fading, setFading] = useState(false)
-
-  useIsomorphicLayoutEffect(() => {
-    if (sessionStorage.getItem('hasLoaded') === 'true') {
-      setVisible(false)
-    }
-  }, [])
+  const [visible,  setVisible]  = useState(true)
+  const [fadeIn,   setFadeIn]   = useState(false)
+  const [showLine, setShowLine] = useState(false)
+  const [slideOut, setSlideOut] = useState(false)
 
   useEffect(() => {
-    if (sessionStorage.getItem('hasLoaded') === 'true') return
-
-    document.body.classList.add('js-loading')
-
-    const fadeTimer = setTimeout(() => {
-      setFading(true)
-      document.body.classList.remove('js-loading')
-      document.body.classList.add('js-loaded')
-    }, 1800)
-
-    const unmountTimer = setTimeout(() => {
+    if (sessionStorage.getItem('loaded')) {
       setVisible(false)
-      sessionStorage.setItem('hasLoaded', 'true')
-    }, 2200)
+      window.dispatchEvent(new Event('pp:loaded'))
+      return
+    }
+
+    // Fade in logo + tagline immediately
+    const t0 = setTimeout(() => setFadeIn(true), 20)
+    // Orange line starts drawing at 200ms
+    const t1 = setTimeout(() => setShowLine(true), 200)
+    // Slide screen up at 1200ms (after line finishes at ~1200ms)
+    const t2 = setTimeout(() => setSlideOut(true), 1200)
+    // Remove from DOM and notify hero at 1870ms (1200 + 670ms slide)
+    const t3 = setTimeout(() => {
+      setVisible(false)
+      sessionStorage.setItem('loaded', 'true')
+      window.dispatchEvent(new Event('pp:loaded'))
+    }, 1870)
 
     return () => {
-      clearTimeout(fadeTimer)
-      clearTimeout(unmountTimer)
-      document.body.classList.remove('js-loading', 'js-loaded')
+      clearTimeout(t0)
+      clearTimeout(t1)
+      clearTimeout(t2)
+      clearTimeout(t3)
     }
   }, [])
 
   if (!visible) return null
 
   return (
-    <>
-      <style>{`
-        @keyframes logo-reveal {
-          from { clip-path: inset(0 100% 0 0); }
-          to   { clip-path: inset(0 0% 0 0); }
-        }
-        @keyframes laser-scan {
-          from { left: 0; opacity: 1; }
-          to   { left: 100%; opacity: 0; }
-        }
-        @keyframes name-fade {
-          from { opacity: 0; transform: translateY(6px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes bar-draw {
-          from { width: 0; }
-          to   { width: 200px; }
-        }
-      `}</style>
-
-      <div
-        data-loader
+    <div
+      style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: 100,
+        backgroundColor: '#1A237E',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '16px',
+        transform: slideOut ? 'translateY(-100%)' : 'translateY(0)',
+        transition: slideOut ? 'transform 0.65s cubic-bezier(0.76, 0, 0.24, 1)' : 'none',
+      }}
+    >
+      {/* Logo — white via brightness-0 invert */}
+      <img
+        src="/images/logo-withoutbg.png"
+        alt="P&P Engineering Works"
         style={{
-          position: 'fixed',
-          inset: 0,
-          zIndex: 9999,
-          backgroundColor: '#ffffff',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: 0,
-          opacity: fading ? 0 : 1,
+          height: '48px',
+          width: 'auto',
+          filter: 'brightness(0) invert(1)',
+          opacity: fadeIn ? 1 : 0,
           transition: 'opacity 0.4s ease',
-          pointerEvents: fading ? 'none' : 'auto',
+        }}
+      />
+
+      {/* Track bar */}
+      <div
+        style={{
+          width: '192px',
+          height: '2px',
+          backgroundColor: 'rgba(255,255,255,0.1)',
+          position: 'relative',
+          overflow: 'hidden',
+          borderRadius: '1px',
         }}
       >
-        {/* Logo with clip-path reveal */}
-        <div style={{ position: 'relative', width: 180, height: 'auto', marginBottom: 20 }}>
-          {/* Base logo (dimmed) */}
-          <img
-            src="/images/logo-withoutbg.png"
-            alt=""
-            aria-hidden
-            style={{ width: 180, height: 'auto', opacity: 0.12, display: 'block' }}
-          />
-          {/* Revealed logo */}
-          <img
-            src="/images/logo-withoutbg.png"
-            alt="P&P Engineering Works"
-            style={{
-              position: 'absolute',
-              inset: 0,
-              width: 180,
-              height: 'auto',
-              display: 'block',
-              animation: 'logo-reveal 1.5s ease-in-out forwards',
-            }}
-          />
-          {/* Laser line */}
-          <div
-            style={{
-              position: 'absolute',
-              top: 0,
-              bottom: 0,
-              width: 3,
-              background: 'linear-gradient(to bottom, transparent, #1565C0, #1565C0, transparent)',
-              boxShadow: '0 0 8px 3px rgba(21,101,192,0.7)',
-              animation: 'laser-scan 1.5s ease-in-out forwards',
-            }}
-          />
-        </div>
-
-        {/* Company name */}
-        <p
+        <div
           style={{
-            fontFamily: 'var(--font-inter), sans-serif',
-            fontWeight: 500,
-            fontSize: 13,
-            color: '#4A5568',
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-            marginBottom: 20,
-            opacity: 0,
-            animation: 'name-fade 0.5s ease forwards 0.8s',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            height: '100%',
+            backgroundColor: '#F07B20',
+            width: showLine ? '100%' : '0%',
+            transition: showLine ? 'width 1s cubic-bezier(0.4, 0, 0.2, 1)' : 'none',
           }}
-        >
-          P&amp;P Engineering Works
-        </p>
-
-        {/* Blue progress line */}
-        <div style={{ width: 200, height: 2, backgroundColor: '#E3EDF7', borderRadius: 2, overflow: 'hidden' }}>
-          <div
-            style={{
-              height: '100%',
-              width: 0,
-              backgroundColor: '#1565C0',
-              borderRadius: 2,
-              animation: 'bar-draw 0.5s ease forwards 1.2s',
-            }}
-          />
-        </div>
+        />
       </div>
-    </>
+
+      {/* Tagline */}
+      <p
+        style={{
+          fontFamily: 'var(--font-inter), sans-serif',
+          fontSize: '12px',
+          letterSpacing: '0.25em',
+          textTransform: 'uppercase',
+          color: 'rgba(255,255,255,0.4)',
+          margin: 0,
+          opacity: fadeIn ? 1 : 0,
+          transition: 'opacity 0.4s ease',
+        }}
+      >
+        Sheet Metal Fabrication
+      </p>
+    </div>
   )
 }

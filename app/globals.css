@@ -27,6 +27,17 @@
   animation: hero-fade-up 0.6s ease-out both;
 }
 
+/* Hero triggered entrance — activated by adding .animate after loading screen exits */
+.hero-enter {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.hero-enter.animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* Spinning badge */
 @keyframes spin-slow {
   from { transform: rotate(0deg); }

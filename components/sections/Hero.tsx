@@ -1,6 +1,6 @@
 'use client'
 import { heroStats } from '@/lib/content'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 // Logo path = null means render as styled text
 const clients = [
@@ -54,6 +54,16 @@ function ClientStrip() {
 }
 
 export default function Hero() {
+  const [animate, setAnimate] = useState(false)
+
+  useEffect(() => {
+    const handler = () => setAnimate(true)
+    window.addEventListener('pp:loaded', handler)
+    // Handle case where event fired before this component mounted
+    if (sessionStorage.getItem('loaded')) setAnimate(true)
+    return () => window.removeEventListener('pp:loaded', handler)
+  }, [])
+
   return (
     <section id="home" className="bg-white">
 
@@ -76,24 +86,24 @@ export default function Hero() {
         {/* ── Top-left text content ── */}
         <div className="absolute top-0 left-0 p-8 md:p-12 lg:p-16 max-w-2xl z-10 flex flex-col justify-center h-full">
           <p
-            className="hero-anim text-xs tracking-[0.2em] uppercase text-white/50 mb-5"
-            style={{ animationDelay: '0.2s' }}
+            className={`hero-enter ${animate ? 'animate' : ''} text-xs tracking-[0.2em] uppercase text-white/50 mb-5`}
+            style={{ transitionDelay: '0ms' }}
           >
             ISO 9001:2015 Certified
           </p>
 
-          <h1
-            className="hero-anim font-sans font-bold text-white text-5xl md:text-6xl lg:text-7xl leading-[1.05] mb-5"
-            style={{ animationDelay: '0.4s' }}
-          >
-            Built in <span className="text-[#93c5fd]">Steel</span>.
-            <br />
-            Trusted by <span className="text-[#93c5fd]">Industry</span>.
+          <h1 className="font-sans font-bold text-white text-5xl md:text-6xl lg:text-7xl leading-[1.05] mb-5">
+            <span className={`hero-enter ${animate ? 'animate' : ''} block`} style={{ transitionDelay: '150ms' }}>
+              Built in <span className="text-[#93c5fd]">Steel</span>.
+            </span>
+            <span className={`hero-enter ${animate ? 'animate' : ''} block`} style={{ transitionDelay: '300ms' }}>
+              Trusted by <span className="text-[#93c5fd]">Industry</span>.
+            </span>
           </h1>
 
           <p
-            className="hero-anim text-base md:text-lg text-white/65 max-w-md leading-relaxed"
-            style={{ animationDelay: '0.6s' }}
+            className={`hero-enter ${animate ? 'animate' : ''} text-base md:text-lg text-white/65 max-w-md leading-relaxed`}
+            style={{ transitionDelay: '450ms' }}
           >
             Sheet metal fabrication from Hyderabad — EV, Solar, Electrical &amp; more.
           </p>
@@ -101,8 +111,8 @@ export default function Hero() {
 
         {/* ── Bottom-right white CTA container (wider, more content) ── */}
         <div
-          className="hero-anim absolute bottom-0 right-0 m-6 md:m-10 lg:m-14 z-10 hidden md:block"
-          style={{ animationDelay: '0.8s' }}
+          className={`hero-enter ${animate ? 'animate' : ''} absolute bottom-0 right-0 m-6 md:m-10 lg:m-14 z-10 hidden md:block`}
+          style={{ transitionDelay: '750ms' }}
         >
           <div className="bg-white rounded-2xl p-6 md:p-8 w-[420px] shadow-2xl">
             <p className="text-sm font-semibold text-[#1A237E] uppercase tracking-wider mb-1">
@@ -153,8 +163,8 @@ export default function Hero() {
 
         {/* ── Mobile CTA (visible below md) ── */}
         <div
-          className="hero-anim absolute bottom-0 left-0 right-0 p-6 z-10 md:hidden flex flex-col gap-3"
-          style={{ animationDelay: '0.8s' }}
+          className={`hero-enter ${animate ? 'animate' : ''} absolute bottom-0 left-0 right-0 p-6 z-10 md:hidden flex flex-col gap-3`}
+          style={{ transitionDelay: '600ms' }}
         >
           <a
             href="#products"
