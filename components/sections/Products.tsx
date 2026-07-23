@@ -58,6 +58,7 @@ const TOTAL_CARDS = showcaseCards.length + 1 // +1 for Explore More
 export default function Products() {
   const { ref, isVisible } = useScrollAnimation()
   const trackRef           = useRef<HTMLDivElement>(null)
+  const touchStartX        = useRef(0)
   const [activeIdx, setActiveIdx] = useState(0)
 
   const anim = (delay = 0): React.CSSProperties => ({
@@ -77,6 +78,16 @@ export default function Products() {
   const scrollToCard = (idx: number) => {
     trackRef.current?.scrollTo({ left: idx * (CARD_W + CARD_GAP), behavior: 'smooth' })
     setActiveIdx(idx)
+  }
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX
+  }
+
+  const onTouchEnd = (e: React.TouchEvent) => {
+    const delta = e.changedTouches[0].clientX - touchStartX.current
+    if (delta < -50) scrollTrack('right')
+    else if (delta > 50) scrollTrack('left')
   }
 
   return (
@@ -110,7 +121,7 @@ export default function Products() {
         <button
           onClick={() => scrollTrack('left')}
           aria-label="Scroll left"
-          className="w-12 h-12 rounded-full bg-navy flex items-center justify-center transition-opacity hover:opacity-80"
+          className="w-9 h-9 md:w-12 md:h-12 rounded-full bg-navy flex items-center justify-center transition-opacity hover:opacity-80"
         >
           <span className="material-symbols-outlined text-white" style={{ fontSize: '22px' }}>
             arrow_back
@@ -119,7 +130,7 @@ export default function Products() {
         <button
           onClick={() => scrollTrack('right')}
           aria-label="Scroll right"
-          className="w-12 h-12 rounded-full bg-navy flex items-center justify-center transition-opacity hover:opacity-80"
+          className="w-9 h-9 md:w-12 md:h-12 rounded-full bg-navy flex items-center justify-center transition-opacity hover:opacity-80"
         >
           <span className="material-symbols-outlined text-white" style={{ fontSize: '22px' }}>
             arrow_forward
@@ -130,18 +141,19 @@ export default function Products() {
       {/* ── Horizontal scroll track ──────────────────────────────────────── */}
       <div
         ref={trackRef}
-        className="showcase-track flex overflow-x-hidden"
-        style={{ gap: CARD_GAP, paddingLeft: EDGE_PAD }}
+        className="showcase-track flex overflow-x-hidden pl-4 md:pl-[48px]"
+        style={{ gap: CARD_GAP }}
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
       >
         {/* Product cards */}
         {showcaseCards.map(card => (
           <article
             key={card.name}
-            className="showcase-card bg-white rounded-2xl shadow-md flex flex-col flex-shrink-0 overflow-hidden"
-            style={{ width: CARD_W, height: 560 }}
+            className="showcase-card bg-white rounded-2xl shadow-md flex flex-col flex-shrink-0 overflow-hidden w-[calc(100vw-32px)] md:w-[420px]"
           >
             {/* Image — top 360px */}
-            <div className="relative flex-shrink-0 overflow-hidden" style={{ height: 360 }}>
+            <div className="relative flex-shrink-0 overflow-hidden h-48 md:h-[360px]">
               <Image
                 src={card.image}
                 alt={card.name}
@@ -203,8 +215,8 @@ export default function Products() {
 
         {/* Explore More card */}
         <article
-          className="showcase-card rounded-2xl flex-shrink-0 flex flex-col items-center justify-center px-10 py-12"
-          style={{ width: CARD_W, height: 560, backgroundColor: '#1A237E' }}
+          className="showcase-card rounded-2xl flex-shrink-0 flex flex-col items-center justify-center px-10 py-12 w-[calc(100vw-32px)] md:w-[420px]"
+          style={{ height: 560, backgroundColor: '#1A237E' }}
         >
           <h3 className="font-heading font-bold text-white text-3xl text-center leading-snug mb-3">
             Explore Our Full Range
@@ -225,7 +237,7 @@ export default function Products() {
       </div>
 
       {/* ── Dot indicators ───────────────────────────────────────────────── */}
-      <div className="flex justify-center items-center gap-2 mt-8">
+      <div className="flex justify-center items-center gap-2 mt-4 md:mt-8">
         {Array.from({ length: TOTAL_CARDS }).map((_, i) => (
           <button
             key={i}

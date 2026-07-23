@@ -86,18 +86,18 @@ export default function Hero() {
         {/* ── Top-left text content ── */}
         <div className="absolute top-0 left-0 p-8 md:p-12 lg:p-16 max-w-2xl z-10 flex flex-col justify-center h-full">
           <p
-            className={`hero-enter ${animate ? 'animate' : ''} text-xs tracking-[0.2em] uppercase text-white/50 mb-5`}
+            className={`hero-enter ${animate ? 'animate' : ''} text-[9px] md:text-xs tracking-[0.2em] uppercase text-white/50 mb-5`}
             style={{ transitionDelay: '0ms' }}
           >
             ISO 9001:2015 Certified
           </p>
 
-          <h1 className="font-sans font-bold text-white text-5xl md:text-6xl lg:text-7xl leading-[1.05] mb-5">
+          <h1 className="font-sans font-bold text-white text-4xl md:text-6xl lg:text-7xl leading-[1.05] mb-5">
             <span className={`hero-enter ${animate ? 'animate' : ''} block`} style={{ transitionDelay: '150ms' }}>
-              Built in <span className="text-[#93c5fd]">Steel</span>.
+              Built in <span className="text-white">Steel</span>.
             </span>
             <span className={`hero-enter ${animate ? 'animate' : ''} block`} style={{ transitionDelay: '300ms' }}>
-              Trusted by <span className="text-[#93c5fd]">Industry</span>.
+              Trusted by <span className="text-white">Industry</span>.
             </span>
           </h1>
 
@@ -191,11 +191,11 @@ export default function Hero() {
 
       {/* ── Stats bar — inside the hero section, below video ────────────────── */}
       <div className="bg-white border-t border-gray-100 pt-8 pb-4 px-6 md:px-12">
-        <div className="grid grid-cols-4 max-w-6xl mx-auto">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-0 max-w-6xl mx-auto">
           {heroStats.map((stat, i) => (
             <div
               key={stat.label}
-              className={`text-center flex flex-col items-center justify-center ${i < heroStats.length - 1 ? 'border-r border-gray-100' : ''}`}
+              className={`text-center flex flex-col items-center justify-center ${i < heroStats.length - 1 ? 'md:border-r md:border-gray-100' : ''}`}
             >
               <div className="font-sans font-bold text-[#1A237E] text-3xl md:text-4xl leading-none whitespace-nowrap">
                 {stat.value}
