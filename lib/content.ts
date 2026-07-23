@@ -34,7 +34,7 @@ export const heroStats = [
   { value: '15+', label: 'Years Experience' },
   { value: 'ISO 9001:2015', label: 'Certified' },
   { value: '12+', label: 'Industry Clients' },
-  { value: '8', label: 'Product Lines' },
+  { value: '18+', label: 'Products' },
 ]
 
 export const heroMarqueeClients = [

@@ -84,12 +84,20 @@ export default function Hero() {
         <div className="absolute inset-0 bg-black/50" />
 
         {/* ── Top-left text content ── */}
-        <div className="absolute top-0 left-0 p-8 md:p-12 lg:p-16 max-w-2xl z-10 flex flex-col justify-center h-full">
+        <div className="absolute top-0 left-0 p-8 pb-8 md:p-12 lg:p-16 max-w-2xl z-10 flex flex-col justify-end md:justify-center h-full">
+          {/* Desktop ISO badge */}
           <p
-            className={`hero-enter ${animate ? 'animate' : ''} text-[9px] md:text-xs tracking-[0.2em] uppercase text-white/50 mb-5`}
+            className={`hero-enter ${animate ? 'animate' : ''} hidden md:block text-xs tracking-[0.2em] uppercase text-white/50 mb-5`}
             style={{ transitionDelay: '0ms' }}
           >
             ISO 9001:2015 Certified
+          </p>
+          {/* Mobile ISO text */}
+          <p
+            className={`hero-enter ${animate ? 'animate' : ''} md:hidden text-[9px] tracking-[2px] uppercase text-white/45 mb-3`}
+            style={{ transitionDelay: '0ms' }}
+          >
+            ISO 9001:2015 · Hyderabad
           </p>
 
           <h1 className="font-sans font-bold text-white text-4xl md:text-6xl lg:text-7xl leading-[1.05] mb-5">
@@ -163,44 +171,59 @@ export default function Hero() {
 
         {/* ── Mobile CTA (visible below md) ── */}
         <div
-          className={`hero-enter ${animate ? 'animate' : ''} absolute bottom-0 left-0 right-0 p-6 z-10 md:hidden flex flex-col gap-3`}
+          className={`hero-enter ${animate ? 'animate' : ''} absolute bottom-0 left-0 right-0 p-6 z-10 md:hidden flex flex-row gap-3`}
           style={{ transitionDelay: '600ms' }}
         >
           <a
             href="#products"
-            className="block w-full bg-[#F07B20] text-white font-semibold py-3 rounded-xl text-sm text-center hover:bg-[#d96a15] transition-colors"
+            className="flex-1 bg-[#F07B20] text-white font-semibold py-3 rounded-xl text-sm text-center hover:bg-[#d96a15] transition-colors"
             onClick={(e) => {
               e.preventDefault()
               document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })
             }}
           >
-            Explore Products
+            Explore
           </a>
           <a
             href="#contact"
-            className="block w-full border border-white/30 text-white font-semibold py-3 rounded-xl text-sm text-center hover:bg-white/10 transition-colors"
+            className="flex-1 border border-white/30 text-white font-semibold py-3 rounded-xl text-sm text-center hover:bg-white/10 transition-colors"
             onClick={(e) => {
               e.preventDefault()
               document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
             }}
           >
-            Contact Us
+            Contact
           </a>
         </div>
       </div>
 
-      {/* ── Stats bar — inside the hero section, below video ────────────────── */}
-      <div className="bg-white border-t border-gray-100 md:pt-8 md:pb-4 md:px-12">
-        <div className="grid grid-cols-2 md:flex md:flex-row md:max-w-6xl md:mx-auto">
+      {/* ── Mobile stats strip — navy, single row ─────────────────────────── */}
+      <div className="flex flex-row bg-[#1A237E] md:hidden">
+        {[
+          { value: '15+',      label: 'Years'     },
+          { value: 'ISO 9001', label: 'Certified' },
+          { value: '12+',      label: 'Clients'   },
+          { value: '18+',      label: 'Products'  },
+        ].map((stat, i) => (
+          <div key={i} className="flex-1 py-3 text-center border-r border-white/10 last:border-r-0">
+            <span className={`font-bold text-white block ${i === 1 ? 'text-[10px]' : 'text-base'}`}>{stat.value}</span>
+            <span className="text-[7px] uppercase tracking-wider text-white/45 mt-0.5 block">{stat.label}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* ── Desktop stats bar — white, 4 columns ─────────────────────────── */}
+      <div className="hidden md:block bg-white border-t border-gray-100 md:pt-8 md:pb-4 md:px-12">
+        <div className="flex flex-row max-w-6xl mx-auto">
           {heroStats.map((stat, i) => (
             <div
               key={stat.label}
-              className="flex flex-col items-center justify-center p-5 border-b border-r border-gray-100 even:border-r-0 [&:nth-child(n+3)]:border-b-0 md:flex-1 md:border-b-0 md:even:border-r md:last:border-r-0"
+              className="flex-1 flex flex-col items-center justify-center p-6 border-r border-gray-100 last:border-r-0"
             >
-              <div className={`font-sans font-bold text-[#1A237E] leading-none ${i === 1 ? 'text-base md:text-2xl' : 'text-2xl md:text-4xl'}`}>
+              <div className={`font-sans font-bold text-[#1A237E] leading-none ${i === 1 ? 'text-2xl' : 'text-4xl'}`}>
                 {stat.value}
               </div>
-              <div className="font-sans text-[9px] md:text-xs uppercase tracking-widest text-gray-400 mt-1 text-center">
+              <div className="font-sans text-xs uppercase tracking-widest text-gray-400 mt-2 text-center">
                 {stat.label}
               </div>
             </div>

@@ -54,7 +54,7 @@ export default function Navbar() {
   return (
     <>
       {/* ── Top announcement strip (Greenboard-style) ── */}
-      <div className="w-full bg-[#1A237E] text-white text-xs text-center py-2 px-4 font-sans tracking-wide z-[60] relative">
+      <div className="hidden md:flex md:items-center md:justify-center w-full bg-[#1A237E] text-white text-xs py-2 px-4 font-sans tracking-wide z-[60] relative">
         <span className="material-symbols-outlined align-middle mr-1.5" style={{ fontSize: '14px' }}>verified</span>
         ISO 9001:2015 Certified &nbsp;·&nbsp; Precision Sheet Metal Fabrication from Hyderabad &nbsp;·&nbsp; Est. 2009
       </div>
